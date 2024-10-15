@@ -67,7 +67,7 @@ const LoginForm = () => {
           <Stack direction='row' spacing={1}>
             <Typography className='text-[16px]'>
               Need to make an account?{' '}
-              <NavLink to={routes.authentication.signup} target='_blank' className='text-dulwichRed hover:underline underline-offset-4'>
+              <NavLink to={routes.authentication.signup} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
                 Sign Up
               </NavLink>
             </Typography>
@@ -112,7 +112,7 @@ const LoginForm = () => {
               <NavLink
                 to={routes.authentication.forgotPassword}
                 target='_blank'
-                className='text-dulwichRed hover:underline underline-offset-4'
+                className='text-uclaBlue hover:underline underline-offset-4'
               >
                 Forgot Password?
               </NavLink>
@@ -123,7 +123,7 @@ const LoginForm = () => {
           <LoadingButton
             loading={isLoading}
             onClick={handleSignIn}
-            className='bg-dulwichRed normal-case w-32 h-11 text-lg rounded-lg font-Inter float-right'
+            className='bg-uclaBlue normal-case w-32 h-11 text-lg rounded-lg font-Inter float-right'
             variant='contained'
             loadingIndicator={<CircularProgress size={16} className='text-bgWhite' />}
           >
