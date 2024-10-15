@@ -12,7 +12,7 @@ const BaseRouter = () => {
       <Routes>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.authentication.login} element={<Login />} />
-        <Route path={routes.authentication.signup} element={<Login />} />
+        <Route path={routes.authentication.signup} element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );
