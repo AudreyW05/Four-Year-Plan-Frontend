@@ -52,7 +52,7 @@ const SignUpForm = () => {
     <Card className='w-[600px] h-[450px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-3xl drop-shadow-2xl'>
       <Stack className='my-6 mx-12' spacing={2.5}>
         <Stack className='font-Inter' spacing={-1}>
-          <Typography className='text-[52px]'>Sign Up</Typography>
+          <Typography className='text-[52px]'>Create Account</Typography>
           <Stack direction='row' spacing={1}>
             <Typography className='text-[16px]'>
               Already have an account?{' '}
@@ -101,11 +101,11 @@ const SignUpForm = () => {
           <LoadingButton
             loading={isLoading}
             onClick={handleSignIn}
-            className='bg-uclaBlue normal-case w-48 h-11 text-lg rounded-lg font-Inter float-right'
+            className='bg-uclaBlue normal-case w-32 h-11 text-lg rounded-lg font-Inter float-right'
             variant='contained'
             loadingIndicator={<CircularProgress size={16} className='text-bgWhite' />}
           >
-            Create Account
+            Sign Up
           </LoadingButton>
         </div>
       </Stack>
