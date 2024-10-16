@@ -11,7 +11,7 @@ import {
   CircularProgress,
   Stack,
   Typography,
-  Grid,
+  Grid2,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -67,7 +67,7 @@ const LoginForm = () => {
           <Stack direction='row' spacing={1}>
             <Typography className='text-[16px]'>
               Need to make an account?{' '}
-              <NavLink to={routes.authentication.signup} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
+              <NavLink to={routes.authentication.signup} className='text-uclaBlue hover:underline underline-offset-4'>
                 Sign Up
               </NavLink>
             </Typography>
@@ -107,17 +107,11 @@ const LoginForm = () => {
               label='Password'
             />
           </FormControl>
-          <Grid container className='w-full justify-center'>
-            <Grid item>
-              <NavLink
-                to={routes.authentication.forgotPassword}
-                target='_blank'
-                className='text-uclaBlue hover:underline underline-offset-4'
-              >
-                Forgot Password?
-              </NavLink>
-            </Grid>
-          </Grid>
+          <Grid2 container className='w-full justify-center'>
+            <NavLink to={routes.authentication.forgotPassword} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
+              Forgot Password?
+            </NavLink>
+          </Grid2>
         </Stack>
         <div className='float-right'>
           <LoadingButton
