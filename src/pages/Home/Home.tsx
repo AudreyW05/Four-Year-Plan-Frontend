@@ -1,10 +1,18 @@
 import React from 'react';
 
+import HomeHeader from '@/components/Home/HomeHeader/HomeHeader';
+import HomeSidebar from '@/components/Home/HomeSidebar/HomeSidebar';
+import Settings from '@/components/Home/Settings/Settings';
+import HomeMain from '@/components/Home/HomeMain/HomeMain';
+
 const Home = () => {
   return (
-    <div className='flex justify-center mt-5'>
-      <h1>Create React App with Tailwind</h1>
-    </div>
+    <>
+    <HomeHeader></HomeHeader>
+    <main>
+      <HomeMain></HomeMain>
+    </main>
+    </>
   );
 };
 
