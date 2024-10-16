@@ -108,7 +108,7 @@ const LoginForm = () => {
             />
           </FormControl>
           <Grid2 container className='w-full justify-center'>
-            <NavLink to={routes.authentication.forgotPassword} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
+            <NavLink to={routes.authentication.forgotPassword} className='text-uclaBlue hover:underline underline-offset-4'>
               Forgot Password?
             </NavLink>
           </Grid2>
