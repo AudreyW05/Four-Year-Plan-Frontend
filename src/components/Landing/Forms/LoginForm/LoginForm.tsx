@@ -67,7 +67,7 @@ const LoginForm = () => {
           <Stack direction='row' spacing={1}>
             <Typography className='text-[16px]'>
               Need to make an account?{' '}
-              <NavLink to={routes.authentication.signup} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
+              <NavLink to={routes.authentication.signup} className='text-uclaBlue hover:underline underline-offset-4'>
                 Sign Up
               </NavLink>
             </Typography>

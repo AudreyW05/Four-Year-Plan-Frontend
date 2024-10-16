@@ -56,7 +56,7 @@ const SignUpForm = () => {
           <Stack direction='row' spacing={1}>
             <Typography className='text-[16px]'>
               Already have an account?{' '}
-              <NavLink to={routes.authentication.login} target='_blank' className='text-uclaBlue hover:underline underline-offset-4'>
+              <NavLink to={routes.authentication.login} className='text-uclaBlue hover:underline underline-offset-4'>
                 Sign In
               </NavLink>
             </Typography>
@@ -68,7 +68,7 @@ const SignUpForm = () => {
             value={email}
             error={emailError}
             onChange={onEmailChange}
-            onKeyPress={e => e.key === 'Enter' && handleSignIn()}
+            onKeyDown={e => e.key === 'Enter' && handleSignIn()}
           />
           <FormControl sx={{ m: 1 }} variant='outlined'>
             <InputLabel htmlFor='outlined-adornment-password' error={passwordError}>
