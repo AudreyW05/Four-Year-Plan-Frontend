@@ -13,6 +13,7 @@ const SignUpForm = () => {
   const [reEnterPassword, setReEnterPassword] = useState<string>('');
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [reEnterPasswordError, setReEnterPasswordError] = useState(false);
 
   const handleSignIn = () => {
     console.log('sign in');
@@ -39,11 +40,10 @@ const SignUpForm = () => {
   };
 
   const onReEnterPasswordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if (passwordError) {
-      setPasswordError(false);
-      if (email.trim().length != 0) {
-        setEmailError(false);
-      }
+    if (password === reEnterPassword) {
+      setReEnterPasswordError(false);
+    } else {
+      setReEnterPasswordError(true);
     }
     setReEnterPassword(event.target.value);
   };
