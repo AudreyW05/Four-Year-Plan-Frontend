@@ -8,10 +8,10 @@ import HomeMain from '@/components/Home/HomeMain/HomeMain';
 const Home = () => {
   return (
     <>
-    <HomeHeader></HomeHeader>
-    <main>
-      <HomeMain></HomeMain>
-    </main>
+      <HomeHeader></HomeHeader>
+      <main>
+        <HomeMain></HomeMain>
+      </main>
     </>
   );
 };

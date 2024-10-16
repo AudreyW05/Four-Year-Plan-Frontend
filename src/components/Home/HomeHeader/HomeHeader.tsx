@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Settings from '../Settings/Settings';
+import Settings from '@components/Home/Settings/Settings';
 
 const HomeHeader = () => {
-    return <></>;
+  return <></>;
 };
 
 export default HomeHeader;
