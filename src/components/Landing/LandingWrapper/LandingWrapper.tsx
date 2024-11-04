@@ -3,7 +3,7 @@ import LandingImage from '@/assets/images/Landing-Image.jpg';
 
 type Props = {
   Form: () => JSX.Element;
-};
+}; //combines login form with background image(landing wrapper)
 
 const LandingWrapper = ({ Form }: Props) => {
   return (
