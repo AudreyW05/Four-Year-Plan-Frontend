@@ -5,5 +5,6 @@ export const routes = {
     login: '/auth/login',
     signup: '/auth/signup',
     forgotPassword: '/auth/forgotPassword',
+    newPassword: '/auth/newPassword',
   },
 };
