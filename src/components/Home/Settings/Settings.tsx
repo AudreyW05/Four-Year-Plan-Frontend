@@ -1,19 +1,19 @@
-import * as React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, DialogProps } from '@mui/material';
 
-interface SettingsProps {
+type Props = {
   onClose: () => void;
-}
+};
 
-const Settings: React.FC<SettingsProps> = ({ onClose }) => {
-  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+const Settings = (props: Props) => {
+  const [scroll, setScroll] = useState<DialogProps['scroll']>('paper');
 
   const handleClose = () => {
-    onClose(); // Close the settings when the "Cancel" or "Subscribe" button is clicked
+    props.onClose();
   };
 
-  const descriptionElementRef = React.useRef<HTMLElement>(null);
-  React.useEffect(() => {
+  const descriptionElementRef = useRef<HTMLElement>(null);
+  useEffect(() => {
     if (descriptionElementRef.current !== null) {
       descriptionElementRef.current.focus();
     }
