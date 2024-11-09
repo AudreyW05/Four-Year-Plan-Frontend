@@ -4,22 +4,17 @@ import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { 
     Box, 
     Drawer, 
-    Button,
-    Divider,
     List, 
-    ListItem, 
     ListItemButton,
-    ListItemIcon,
     ListItemText, 
     Collapse 
 } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-interface ClassCategoriesProps {
+type Props = {
     sectname: string;
 }
 
-const ClassCategories: React.FC<ClassCategoriesProps> = ({sectname}) => {
+const ClassCategories = (props: Props) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -27,7 +22,7 @@ const ClassCategories: React.FC<ClassCategoriesProps> = ({sectname}) => {
             <ListItemButton
             onClick={() => setOpen(!open)}
             >
-                <ListItemText>{sectname}</ListItemText>
+                <ListItemText>{props.sectname}</ListItemText>
                 {open ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
             </ListItemButton>
             <Collapse in={open}>

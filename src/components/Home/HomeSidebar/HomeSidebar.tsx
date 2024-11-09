@@ -3,32 +3,12 @@ import ClassCategories from './ClassCategories/ClassCategories';
 import { 
     Box, 
     Drawer,
-    Toolbar,
-    Button,
-    List, 
-    ListItem, 
-    ListItemButton,
-    ListItemIcon,
-    ListItemText, 
-    Collapse,
     CssBaseline,
     IconButton,
-    AppBar,
-    Typography
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  }));
 
 const HomeSidebar = () => {
     const [open, setOpen] = useState(false);
@@ -69,11 +49,19 @@ const HomeSidebar = () => {
                 }} open={open}>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <DrawerHeader>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: (theme) => theme.spacing(0, 1),
+                            ...((theme) => theme.mixins.toolbar),
+                            justifyContent: 'flex-end',
+                        }}
+                    >
                         <IconButton onClick={handleDrawerClose}>
                             <ChevronLeftIcon />
                         </IconButton>
-                    </DrawerHeader>
+                    </Box>
                     <ClassCategories sectname={'Lower Division'}></ClassCategories>
                     <ClassCategories sectname={'Upper Division'}></ClassCategories>
                     <ClassCategories sectname={'Math'}></ClassCategories>
