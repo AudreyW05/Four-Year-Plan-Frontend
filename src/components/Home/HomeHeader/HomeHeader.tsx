@@ -25,9 +25,6 @@ const HomeHeader = () => {
           </div>
         </Grid>
       </AppBar>
-
-      <main className={showSettings ? 'blurred' : ''}>{/* Your main content goes here */}</main>
-
       {showSettings && <Settings onClose={handleShowSettings} />}
     </>
   );
