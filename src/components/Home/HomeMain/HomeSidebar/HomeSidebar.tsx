@@ -16,7 +16,7 @@ const HomeSidebar = () => {
   };
 
   return (
-    <Box className='flex mt-24'>
+    <Box className='mt-24'>
       <IconButton
         aria-label='open drawer'
         onClick={handleDrawerOpen}
