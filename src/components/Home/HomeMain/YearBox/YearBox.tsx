@@ -9,11 +9,11 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 type Props = {
   year: string;
-}
+};
 
 const YearBox = (props: Props) => {
   // Initial quarters without "Summer"
-  const [quarters, setQuarters] = useState<string[]>(["Fall Quarter", "Winter Quarter", "Spring Quarter"]);
+  const [quarters, setQuarters] = useState<string[]>(['Fall Quarter', 'Winter Quarter', 'Spring Quarter']);
   const [showSummer, setShowSummer] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -21,9 +21,9 @@ const YearBox = (props: Props) => {
   const toggleSummer = () => {
     setShowSummer(!showSummer);
     if (!showSummer) {
-      setQuarters([...quarters, "Summer Quarter"]);
+      setQuarters([...quarters, 'Summer Quarter']);
     } else {
-      setQuarters(quarters.filter((quarter) => quarter !== "Summer Quarter"));
+      setQuarters(quarters.filter(quarter => quarter !== 'Summer Quarter'));
     }
   };
 
@@ -33,7 +33,7 @@ const YearBox = (props: Props) => {
       <Typography className='flex-shrink-0 mb-1 text-left pl-3 pt-3' variant='h5' align='center'>
         Year {props.year}
       </Typography>
-      
+
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center flex-grow gap-1 justify-between w-full'>
         {quarters.map((quarter, index) => (

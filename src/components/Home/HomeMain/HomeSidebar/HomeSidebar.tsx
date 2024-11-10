@@ -16,13 +16,14 @@ const HomeSidebar = () => {
   };
 
   return (
-    <Box className='flex mt-24'>
+    <Box className={`mt-24 ${open ? 'ml-64' : 'ml'}`}>
       <IconButton
         aria-label='open drawer'
         onClick={handleDrawerOpen}
         edge='start'
-        className='mr-2 ml-4 mt-1'
+        className='mr-2 ml-4 mt-1 static hover:text-uclaBlue'
         sx={[open && { display: 'none' }]}
+        disableRipple
       >
         <MenuIcon />
       </IconButton>
@@ -32,14 +33,15 @@ const HomeSidebar = () => {
         className='top-24 z-0'
         sx={{
           '& .MuiDrawer-paper': {
+            zIndex: 0, // Set z-index to 0
             top: '82px', // Also apply this to the Drawer paper itself
           },
         }}
       >
         <Box className='flex-col w-64'>
           <Box className='flex items-center px-2 my-4 justify-end'>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
+            <IconButton onClick={handleDrawerClose} disableRipple disableTouchRipple>
+              <ChevronLeftIcon className='hover:text-uclaBlue' />
             </IconButton>
           </Box>
           <ClassCategories sectname={'Lower Division'}></ClassCategories>
