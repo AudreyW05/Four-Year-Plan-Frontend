@@ -3,6 +3,7 @@ import ClassCategories from './ClassCategories/ClassCategories';
 import { Box, Drawer, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import UnitBar from './UnitBar/UnitBar';
 
 const HomeSidebar = () => {
   const [open, setOpen] = useState(false);
@@ -50,6 +51,7 @@ const HomeSidebar = () => {
           <ClassCategories sectname={'Physics'}></ClassCategories>
           <ClassCategories sectname={'GEs'}></ClassCategories>
           <ClassCategories sectname={'Others'}></ClassCategories>
+          <UnitBar value={50}></UnitBar>
         </Box>
       </Drawer>
     </Box>
