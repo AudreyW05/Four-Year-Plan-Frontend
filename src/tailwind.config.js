@@ -14,6 +14,7 @@ const TailWindTheme = {
       uclaLightBlue: '#DAEBFE',
       bgBlur: 'rgba(255, 255, 255, 0.5)',
       transparent: 'transparent',
+      bgTrash: '#f87171',
     },
     fontSize: {
       sm: 12,
