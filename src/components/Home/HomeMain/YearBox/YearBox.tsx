@@ -1,7 +1,7 @@
 // YearBox.tsx
 import React, { useState } from 'react';
 import QuarterBox from '@components/Home/HomeMain/YearBox/QuarterBox/QuarterBox';
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -40,18 +40,23 @@ const YearBox = (props: Props) => {
           <QuarterBox key={index} quarter={quarter} />
         ))}
         <Box
-          onClick={toggleSummer}
+          onClick={() => {
+            toggleSummer(), setIsHovered(false);
+          }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {!isHovered
-          ? showSummer
-            ? <RemoveCircleOutlineIcon className='text-textGray' />
-            : <AddCircleOutlineIcon className='text-textGray' />
-          : showSummer
-          ? <RemoveCircleIcon className='text-textGray' />
-          : <AddCircleIcon className='text-textGray' />
-        }
+          {!isHovered ? (
+            showSummer ? (
+              <RemoveCircleOutlineIcon className='text-textGray' />
+            ) : (
+              <AddCircleOutlineIcon className='text-textGray' />
+            )
+          ) : showSummer ? (
+            <RemoveCircleIcon className='text-textGray' />
+          ) : (
+            <AddCircleIcon className='text-textGray' />
+          )}
         </Box>
       </Box>
     </Box>

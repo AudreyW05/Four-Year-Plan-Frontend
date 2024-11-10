@@ -7,11 +7,15 @@ const TrashBox = () => {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <Box
-      className='fixed bottom-4 right-4 bg-bgTrash text-white p-4 rounded-lg shadow-lg w-20 h-16 flex items-center justify-center hover:bg-bgWhite hover:border-2 hover:border-bgTrash' 
+      className='fixed bottom-8 right-10 bg-bgTrash text-white p-4 rounded-lg shadow-lg w-20 h-16 flex items-center justify-center hover:bg-bgWhite hover:border-2 hover:border-bgTrash'
       onMouseEnter={() => setIsHovered(true)} // Set hover to true when mouse enters
-      onMouseLeave={() => setIsHovered(false)} // Set hover to false when mouse leaves  
+      onMouseLeave={() => setIsHovered(false)} // Set hover to false when mouse leaves
     >
-      {isHovered ? <DeleteOutlineIcon fontSize='large' className='text-bgTrash'/> : <DeleteIcon fontSize='large' className='text-bgWhite'/>}
+      {isHovered ? (
+        <DeleteOutlineIcon fontSize='large' className='text-bgTrash' />
+      ) : (
+        <DeleteIcon fontSize='large' className='text-bgWhite' />
+      )}
     </Box>
   );
 };
