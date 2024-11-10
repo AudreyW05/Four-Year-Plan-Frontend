@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import YearBox from '@components/Home/HomeMain/YearBox/YearBox';
+import { Box } from '@mui/material'; 
 
 const HomeMain = () => {
-  return (
-    <>
-      <YearBox></YearBox>
-      <YearBox></YearBox>
-      <YearBox></YearBox>
-    </>
+  return (  
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column', // Stack the YearBox vertically
+        marginY: 2
+      }}
+    > 
+      <YearBox year='1'/>
+      <YearBox year='2'/>
+      <YearBox year='3'/>
+      <YearBox year='4'/>
+    </Box>
   );
 };
 
