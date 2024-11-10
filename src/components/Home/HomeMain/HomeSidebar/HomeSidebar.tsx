@@ -16,7 +16,7 @@ const HomeSidebar = () => {
   };
 
   return (
-    <Box className='mt-24'>
+    <Box className={`mt-24 ${open ? 'ml-64' : ''}`}>
       <IconButton
         aria-label='open drawer'
         onClick={handleDrawerOpen}
@@ -32,6 +32,7 @@ const HomeSidebar = () => {
         className='top-24 z-0'
         sx={{
           '& .MuiDrawer-paper': {
+            zIndex: 0, // Set z-index to 0
             top: '82px', // Also apply this to the Drawer paper itself
           },
         }}

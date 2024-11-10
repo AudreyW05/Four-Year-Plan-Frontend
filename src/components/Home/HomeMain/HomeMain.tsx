@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import YearBox from '@components/Home/HomeMain/YearBox/YearBox';
 import HomeSidebar from '@components/Home/HomeMain/HomeSidebar/HomeSidebar';
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 
 const HomeMain = () => {
   return (
-    <Stack direction='row' className='z-0'>
+    <Stack direction='row' className='w-full'>
       <HomeSidebar />
-      <Stack className='mt-24'>
+      <Stack className='mt-24 w-full items-center justify-center'>
         <YearBox year='1' />
         <YearBox year='2' />
         <YearBox year='3' />

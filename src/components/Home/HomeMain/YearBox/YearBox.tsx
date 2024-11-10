@@ -23,7 +23,7 @@ const YearBox = (props: Props) => {
   };
 
   return (
-    <Box className='font-Inter bg-bgGray text-textGray flex flex-col items-start justify-center w-fit p-2 rounded-lg shadow-sm mx-6 my-3'>
+    <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-6 my-3'>
       {/* Year # on top */}
       <Typography className='flex-shrink-0 mb-1 text-left pl-3 pt-3' variant='h5' align='center'>
         Year {props.year}
