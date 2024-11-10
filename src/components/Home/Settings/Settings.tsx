@@ -1,22 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Button,
-  DialogProps,
-  FormControlLabel,
-  Checkbox,
-} from '@mui/material';
+import React, { useEffect, useRef } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, FormControlLabel, Checkbox } from '@mui/material';
 
 type Props = {
   onClose: () => void;
 };
 
 const Settings = (props: Props) => {
-  const [scroll, setScroll] = useState<DialogProps['scroll']>('paper');
+  const scroll = 'paper';
 
   const handleClose = () => {
     props.onClose();
@@ -48,7 +38,7 @@ const Settings = (props: Props) => {
           <div className='space-y-6'>
             <div>
               <h2 className='text-lg font-semibold'>Lower Divs</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='Com Sci 1' />
                 <FormControlLabel control={<Checkbox />} label='Com Sci 31' />
                 <FormControlLabel control={<Checkbox />} label='Com Sci 32' />
@@ -60,7 +50,7 @@ const Settings = (props: Props) => {
 
             <div>
               <h2 className='text-lg font-semibold'>Upper Divs</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='Com Sci 111' />
                 <FormControlLabel control={<Checkbox />} label='Com Sci 118' />
                 <FormControlLabel control={<Checkbox />} label='Com Sci 130' />
@@ -74,7 +64,7 @@ const Settings = (props: Props) => {
 
             <div>
               <h2 className='text-lg font-semibold'>Math</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='Math 31A' />
                 <FormControlLabel control={<Checkbox />} label='Math 31B' />
                 <FormControlLabel control={<Checkbox />} label='Math 32A' />
@@ -87,7 +77,7 @@ const Settings = (props: Props) => {
 
             <div>
               <h2 className='text-lg font-semibold'>Physics</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='Physics 1A' />
                 <FormControlLabel control={<Checkbox />} label='Physics 1B' />
                 <FormControlLabel control={<Checkbox />} label='Physics 1C' />
@@ -97,14 +87,14 @@ const Settings = (props: Props) => {
 
             <div>
               <h2 className='text-lg font-semibold'>Probability</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='Probability' />
               </div>
             </div>
 
             <div>
               <h2 className='text-lg font-semibold'>CS Electives</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='CS Elective 1' />
                 <FormControlLabel control={<Checkbox />} label='CS Elective 2' />
                 <FormControlLabel control={<Checkbox />} label='CS Elective 3' />
@@ -115,7 +105,7 @@ const Settings = (props: Props) => {
 
             <div>
               <h2 className='text-lg font-semibold'>General Education</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
+              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
                 <FormControlLabel control={<Checkbox />} label='GE 1' />
                 <FormControlLabel control={<Checkbox />} label='GE 2' />
                 <FormControlLabel control={<Checkbox />} label='GE 3' />
@@ -127,9 +117,9 @@ const Settings = (props: Props) => {
             <div>
               <h2 className='text-lg font-semibold'>Technical Breadth</h2>
               <div className='grid grid-cols-4 gap-4 mt-4'>
-                <FormControlLabel control={<Checkbox />} label='Tec Breadth 1' />
-                <FormControlLabel control={<Checkbox />} label='Tec Breadth 2' />
-                <FormControlLabel control={<Checkbox />} label='Tec Breadth 3' />
+                <FormControlLabel control={<Checkbox />} label='Tech Breadth 1' />
+                <FormControlLabel control={<Checkbox />} label='Tech Breadth 2' />
+                <FormControlLabel control={<Checkbox />} label='Tech Breadth 3' />
               </div>
             </div>
 
