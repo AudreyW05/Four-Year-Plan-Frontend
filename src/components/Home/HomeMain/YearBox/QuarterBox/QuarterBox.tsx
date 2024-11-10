@@ -3,23 +3,17 @@ import ClassBox from '@components/Home/HomeMain/YearBox/QuarterBox/ClassBox/Clas
 
 import { Box, Typography } from '@mui/material'
 
-interface QuarterBoxProps {
+type Props = {
   quarter: string;
 }
 
-const QuarterBox: React.FC<QuarterBoxProps> = ({ quarter }) => {
+const QuarterBox = ( props: Props) => {
   return (
     <Box
-      sx={{
-        margin: 2,
-        border: "1px solid none",
-        borderColor: "primary.main",
-        borderRadius: 1,
-        textAlign: "center",
-      }}
+      className="m-2"
     >
-      <Typography className="font-Inter bg-bgGray text-textGray" align="left">{quarter}</Typography>
-      <ClassBox quarterName={quarter}></ClassBox>
+      <Typography className="font-Inter bg-bgGray text-textGray" align="left">{props.quarter}</Typography>
+      <ClassBox quarterName={props.quarter}></ClassBox>
     </Box>
   );
 };

@@ -8,6 +8,7 @@ interface ClassBoxProps {
 const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
   return (
     <Box
+      className="bg-bgGray"
       display="flex"
       flexDirection="column"
       alignItems="center"
@@ -15,22 +16,13 @@ const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
       borderRadius={2}
       padding={2}
       gap={2}
-      sx={{
-        backgroudColor: "#F3F3F4",
-        
-      }}
     >
       {/* 2x2 Grid for storing classes */}
       <Grid container spacing={1}>
         {/* Class 1 */}
         <Grid item xs={6}>
-          <Paper className="font-Inter bg-bgGray text-textGray"
+          <Paper className="font-Inter bg-bgGray text-textGray p-4 text-center min-h-[50px]"
             elevation={2}
-            style={{
-              padding: '16px',
-              textAlign: 'center',
-              minHeight: '50px',  // Minimum height for class slot
-            }}
           >
             <Typography variant="body2">Class 1</Typography>
           </Paper>
@@ -38,13 +30,8 @@ const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
         
         {/* Class 2 */}
         <Grid item xs={6}>
-          <Paper className="font-Inter bg-bgGray text-textGray"
+          <Paper className="font-Inter bg-bgGray text-textGray p-4 text-center min-h-[50px]"
             elevation={2}
-            style={{
-              padding: '16px',
-              textAlign: 'center',
-              minHeight: '50px',
-            }}
           >
             <Typography variant="body2">Class 2</Typography>
           </Paper>
@@ -52,13 +39,8 @@ const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
 
         {/* Class 3 */}
         <Grid item xs={6}>
-          <Paper className="font-Inter bg-bgGray text-textGray"
+          <Paper className="font-Inter bg-bgGray text-textGray p-4 text-center min-h-[50px]"
             elevation={2}
-            style={{
-              padding: '16px',
-              textAlign: 'center',
-              minHeight: '50px',
-            }}
           >
             <Typography variant="body2">Class 3</Typography>
           </Paper>
@@ -66,13 +48,8 @@ const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
 
         {/* Class 4 */}
         <Grid item xs={6}>
-          <Paper className="font-Inter bg-bgGray text-textGray"
+          <Paper className="font-Inter bg-bgGray text-textGray p-4 text-center min-h-[50px]"
             elevation={2}
-            style={{
-              padding: '16px',
-              textAlign: 'center',
-              minHeight: '50px',
-            }}
           >
             <Typography variant="body2">Class 4</Typography>
           </Paper>

@@ -4,13 +4,7 @@ import { Box } from '@mui/material';
 
 const HomeMain = () => {
   return (  
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column', // Stack the YearBox vertically
-        marginY: 2
-      }}
-    > 
+    <Box className="flex flex-col my-3"> 
       <YearBox year='1'/>
       <YearBox year='2'/>
       <YearBox year='3'/>

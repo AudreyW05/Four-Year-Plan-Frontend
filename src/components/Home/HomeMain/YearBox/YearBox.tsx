@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import QuarterBox from '@components/Home/HomeMain/YearBox/QuarterBox/QuarterBox';
 import { Box, Button, Typography } from "@mui/material";
 
-interface YearBoxProps {
+type Props = {
   year: string;
 }
 
-const YearBox: React.FC<YearBoxProps> = ({ year }) => {
+const YearBox = (props: Props) => {
   // Initial quarters without "Summer"
   const [quarters, setQuarters] = useState<string[]>(["Fall Quarter", "Winter Quarter", "Spring Quarter"]);
   const [showSummer, setShowSummer] = useState<boolean>(false);
@@ -23,51 +23,27 @@ const YearBox: React.FC<YearBoxProps> = ({ year }) => {
   };
 
   return (
-    <Box className="font-Inter bg-bgGray text-textGray"
-      sx={{
-        display: "flex",
-        flexDirection: "column", // Stack Year and Quarters vertically
-        alignItems: "flex-start", 
-        justifyContent: "center", // Center items vertically
-        width: "auto",
-        padding: 2,
-        borderRadius: 2,
-        boxShadow: 1, // Optional: Add a light shadow for better visibility
-        marginX: 4,
-        marginY: 2
-      }}
-    >
-      {/* Year 2024 on top */}
-      <Typography variant="h5" align="center" sx={{ flexShrink: 0, marginBottom: 1, textAlign: "left" }}>
-        Year {year}
+    <Box className="font-Inter bg-bgGray text-textGray flex flex-col items-start justify-center w-auto p-2 rounded-lg shadow-sm mx-6 my-3">
+      {/* Year # on top */}
+      <Typography className="flex-shrink-0 mb-1 text-left pl-3 pt-3" variant="h5" align="center">
+        Year {props.year}
       </Typography>
       
       {/* QuarterBoxes will flex here */}
       <Box 
-        className="bg-bgGray text-textGray"
-        sx={{ 
-          display: "flex", 
-          flexDirection: "row", 
-          alignItems: "center", 
-          flexGrow: 1, 
-          gap: 1 }}>
+        className="bg-bgGray text-textGray flex flex-row items-center flex-grow gap-1">
         {quarters.map((quarter, index) => (
           <QuarterBox key={index} quarter={quarter} />
         ))}
         <Button
+          className="rotate-90"
           onClick={toggleSummer}
           color="primary"
           variant="contained"
           size="small"
-          sx={{
-            transform: 'rotate(90deg)'
-          }}
+          
         >
-          <span
-            style={{
-              transform: 'rotate(-90deg)', // Rotate the text back to its original orientation
-          }}
-          >
+          <span className="-rotate-90">
             {showSummer ? "-" : "+"}
           </span>
         </Button>
