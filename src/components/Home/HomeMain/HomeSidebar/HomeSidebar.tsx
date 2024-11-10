@@ -16,13 +16,14 @@ const HomeSidebar = () => {
   };
 
   return (
-    <Box className={`mt-24 ${open ? 'ml-64' : ''}`}>
+    <Box className={`mt-24 ${open ? 'ml-64' : 'ml'}`}>
       <IconButton
         aria-label='open drawer'
         onClick={handleDrawerOpen}
         edge='start'
-        className='mr-2 ml-4 mt-1'
+        className='mr-2 ml-4 mt-1 static hover:text-uclaBlue'
         sx={[open && { display: 'none' }]}
+        disableRipple
       >
         <MenuIcon />
       </IconButton>
@@ -39,8 +40,8 @@ const HomeSidebar = () => {
       >
         <Box className='flex-col w-64'>
           <Box className='flex items-center px-2 my-4 justify-end'>
-            <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
+            <IconButton onClick={handleDrawerClose} disableRipple disableTouchRipple>
+              <ChevronLeftIcon className='hover:text-uclaBlue' />
             </IconButton>
           </Box>
           <ClassCategories sectname={'Lower Division'}></ClassCategories>
