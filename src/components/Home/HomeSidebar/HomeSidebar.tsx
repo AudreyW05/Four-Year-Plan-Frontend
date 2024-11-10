@@ -26,7 +26,16 @@ const HomeSidebar = () => {
       >
         <MenuIcon />
       </IconButton>
-      <Drawer variant='persistent' open={open}>
+      <Drawer
+        variant='persistent'
+        open={open}
+        className='top-24 z-0'
+        sx={{
+          '& .MuiDrawer-paper': {
+            top: '82px', // Also apply this to the Drawer paper itself
+          },
+        }}
+      >
         <Box className='flex-col w-64'>
           <Box className='flex items-center px-2 my-4 justify-end'>
             <IconButton onClick={handleDrawerClose}>
