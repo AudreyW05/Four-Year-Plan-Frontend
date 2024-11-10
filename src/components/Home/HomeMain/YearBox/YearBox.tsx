@@ -1,7 +1,11 @@
 // YearBox.tsx
 import React, { useState } from 'react';
 import QuarterBox from '@components/Home/HomeMain/YearBox/QuarterBox/QuarterBox';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from "@mui/material";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 type Props = {
   year: string;
@@ -11,6 +15,7 @@ const YearBox = (props: Props) => {
   // Initial quarters without "Summer"
   const [quarters, setQuarters] = useState<string[]>(['Fall Quarter', 'Winter Quarter', 'Spring Quarter']);
   const [showSummer, setShowSummer] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Toggle function to add or remove "Summer"
   const toggleSummer = () => {
@@ -34,9 +39,20 @@ const YearBox = (props: Props) => {
         {quarters.map((quarter, index) => (
           <QuarterBox key={index} quarter={quarter} />
         ))}
-        <Button className='rotate-90' onClick={toggleSummer} color='primary' variant='contained' size='small'>
-          <span className='-rotate-90'>{showSummer ? '-' : '+'}</span>
-        </Button>
+        <Box
+          onClick={toggleSummer}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {!isHovered
+          ? showSummer
+            ? <RemoveCircleOutlineIcon className='text-textGray' />
+            : <AddCircleOutlineIcon className='text-textGray' />
+          : showSummer
+          ? <RemoveCircleIcon className='text-textGray' />
+          : <AddCircleIcon className='text-textGray' />
+        }
+        </Box>
       </Box>
     </Box>
   );

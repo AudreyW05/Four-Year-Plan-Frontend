@@ -14,6 +14,7 @@ const HomeMain = () => {
         <YearBox year='4' />
       </Stack>
     </Stack>
+    <TrashBox/>
   );
 };
 
