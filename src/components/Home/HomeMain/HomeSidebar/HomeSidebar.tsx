@@ -17,17 +17,19 @@ const HomeSidebar = () => {
   };
 
   return (
-    <Box className={`mt-24 ${open ? 'ml-64' : 'ml'}`}>
-      <IconButton
-        aria-label='open drawer'
-        onClick={handleDrawerOpen}
-        edge='start'
-        className='mr-2 ml-4 mt-1 static hover:text-uclaBlue'
-        sx={[open && { display: 'none' }]}
-        disableRipple
-      >
-        <MenuIcon />
-      </IconButton>
+    <Box className={`mt-24 ${open ? 'ml-64' : 'ml'}`} overflow={'auto'}>
+      <Box position={'fixed'}>
+        <IconButton
+          aria-label='open drawer'
+          onClick={handleDrawerOpen}
+          edge='start'
+          className='mr-2 ml-4 mt-1 static hover:text-uclaBlue'
+          sx={[open && { display: 'none' }]}
+          disableRipple
+        >
+          <MenuIcon/>
+        </IconButton>
+      </Box>
       <Drawer
         variant='persistent'
         open={open}
