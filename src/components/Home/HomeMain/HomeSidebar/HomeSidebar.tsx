@@ -42,13 +42,13 @@ const HomeSidebar = () => {
           },
         }}
       >
-        <Box className='flex-col w-64' display={'flex'} flexDirection={'column'} height={'88%'} overflow={'auto'}>
-          <Box className='flex items-center px-2 my-4 justify-end'>
+        <Box className='flex-col w-64' display={'flex'} flexDirection={'column'} height={'88%'}>
+          <Box className='flex items-center px-2 my-4 justify-end' overflow={'auto'}>
             <IconButton onClick={handleDrawerClose} disableRipple disableTouchRipple>
               <ChevronLeftIcon className='hover:text-uclaBlue' />
             </IconButton>
           </Box>
-          <Box flexGrow={1}>
+          <Box flexGrow={1} overflow={'auto'}>
             <ClassCategories sectname={'Lower Division'}></ClassCategories>
             <ClassCategories sectname={'Upper Division'}></ClassCategories>
             <ClassCategories sectname={'Math'}></ClassCategories>
