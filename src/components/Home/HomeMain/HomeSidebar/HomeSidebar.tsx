@@ -36,22 +36,29 @@ const HomeSidebar = () => {
           '& .MuiDrawer-paper': {
             zIndex: 0, // Set z-index to 0
             top: '82px', // Also apply this to the Drawer paper itself
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh',
           },
         }}
       >
-        <Box className='flex-col w-64'>
+        <Box className='flex-col w-64' display={'flex'} flexDirection={'column'} height={'88%'} overflow={'auto'}>
           <Box className='flex items-center px-2 my-4 justify-end'>
             <IconButton onClick={handleDrawerClose} disableRipple disableTouchRipple>
               <ChevronLeftIcon className='hover:text-uclaBlue' />
             </IconButton>
           </Box>
-          <ClassCategories sectname={'Lower Division'}></ClassCategories>
-          <ClassCategories sectname={'Upper Division'}></ClassCategories>
-          <ClassCategories sectname={'Math'}></ClassCategories>
-          <ClassCategories sectname={'Physics'}></ClassCategories>
-          <ClassCategories sectname={'GEs'}></ClassCategories>
-          <ClassCategories sectname={'Others'}></ClassCategories>
-          <UnitBar value={50}></UnitBar>
+          <Box flexGrow={1}>
+            <ClassCategories sectname={'Lower Division'}></ClassCategories>
+            <ClassCategories sectname={'Upper Division'}></ClassCategories>
+            <ClassCategories sectname={'Math'}></ClassCategories>
+            <ClassCategories sectname={'Physics'}></ClassCategories>
+            <ClassCategories sectname={'GEs'}></ClassCategories>
+            <ClassCategories sectname={'Others'}></ClassCategories>
+          </Box>
+          <Box mt={1}>
+              <UnitBar value={50}></UnitBar>
+          </Box>
         </Box>
       </Drawer>
     </Box>
