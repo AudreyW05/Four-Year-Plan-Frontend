@@ -16,12 +16,12 @@ const HomeMain = () => {
     if (numOfClasses < 6) {
       setClasses(numOfClasses + 1);
     }
-  }
+  };
   const handleRemove = () => {
     if (numOfClasses > 1) {
       setClasses(numOfClasses - 1);
     }
-  }
+  };
   return (
     <>
       <Stack direction='row' className='w-full'>
@@ -34,35 +34,27 @@ const HomeMain = () => {
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>
             {/* Add Box */}
             {numOfClasses < 6 && (
-            <Box
-              onClick={() => {
-               handleAdd(), setAddIsHovered(false);
-              }}
-              onMouseEnter={() => setAddIsHovered(true)}
-              onMouseLeave={() => setAddIsHovered(false)}
-            >
-              {addIsHovered ? (
-                <AddCircleIcon className='text-textGray' />
-              ) : (
-                <AddCircleOutlineIcon className='text-textGray' />
-              )}
-            </Box>
+              <Box
+                onClick={() => {
+                  handleAdd(), setAddIsHovered(false);
+                }}
+                onMouseEnter={() => setAddIsHovered(true)}
+                onMouseLeave={() => setAddIsHovered(false)}
+              >
+                {addIsHovered ? <AddCircleIcon className='text-textGray' /> : <AddCircleOutlineIcon className='text-textGray' />}
+              </Box>
             )}
             {/* Remove Box */}
             {numOfClasses > 1 && (
-            <Box
-              onClick={() => {
-               handleRemove(), setRemoveIsHovered(false);
-              }}
-              onMouseEnter={() => setRemoveIsHovered(true)}
-              onMouseLeave={() => setRemoveIsHovered(false)}
-            >
-              {removeIsHovered ? (
-                <RemoveCircleIcon className='text-textGray' />
-              ) : (
-                <RemoveCircleOutlineIcon className='text-textGray' />
-              )}
-            </Box>
+              <Box
+                onClick={() => {
+                  handleRemove(), setRemoveIsHovered(false);
+                }}
+                onMouseEnter={() => setRemoveIsHovered(true)}
+                onMouseLeave={() => setRemoveIsHovered(false)}
+              >
+                {removeIsHovered ? <RemoveCircleIcon className='text-textGray' /> : <RemoveCircleOutlineIcon className='text-textGray' />}
+              </Box>
             )}
           </Stack>
         </Stack>
