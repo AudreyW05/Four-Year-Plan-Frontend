@@ -18,18 +18,16 @@ const HomeSidebar = () => {
 
   return (
     <Box className={`mt-24 ${open ? 'ml-64' : 'ml'}`} overflow={'auto'}>
-      <Box position={'fixed'}>
-        <IconButton
-          aria-label='open drawer'
-          onClick={handleDrawerOpen}
-          edge='start'
-          className='mr-2 ml-4 mt-1 static hover:text-uclaBlue'
-          sx={[open && { display: 'none' }]}
-          disableRipple
-        >
-          <MenuIcon/>
-        </IconButton>
-      </Box>
+      <IconButton
+        aria-label='open drawer'
+        onClick={handleDrawerOpen}
+        edge='start'
+        className='mr-2 ml-4 mt-1 sticky hover:text-uclaBlue'
+        sx={[open && { display: 'none' }]}
+        disableRipple
+      >
+        <MenuIcon />
+      </IconButton>
       <Drawer
         variant='persistent'
         open={open}
@@ -59,7 +57,7 @@ const HomeSidebar = () => {
             <ClassCategories sectname={'Others'}></ClassCategories>
           </Box>
           <Box mt={1}>
-              <UnitBar value={50}></UnitBar>
+            <UnitBar value={50}></UnitBar>
           </Box>
         </Box>
       </Drawer>
