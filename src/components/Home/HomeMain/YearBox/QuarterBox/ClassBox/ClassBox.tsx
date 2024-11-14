@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Paper, Typography, Box } from '@mui/material';
 
-interface ClassBoxProps {
+type Props = {
   quarterName: string; // Name of the quarter
-}
+};
 
-const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
+const ClassBox = (props: Props) => {
   return (
     <Box
       className='bg-bgGray'
@@ -50,5 +50,4 @@ const ClassBox: React.FC<ClassBoxProps> = ({ quarterName }) => {
     </Box>
   );
 };
-
 export default ClassBox;
