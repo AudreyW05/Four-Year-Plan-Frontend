@@ -9,7 +9,7 @@ const UnitBar: React.FC<Props> = ({ value }) => {
   const progress = value;
 
   return (
-    <Box display='flex' alignItems='center' flexDirection='column' width='100%'>
+    <Box display='flex' alignItems='center' flexDirection='column' width='100%' className='mb-6'>
       <Typography variant='body1' mb={1}>
         Total Units: {value}
       </Typography>
