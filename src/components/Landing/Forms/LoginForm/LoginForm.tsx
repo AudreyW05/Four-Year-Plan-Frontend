@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { severity } from '@/constants/constants';
+
+import { useNavigate } from 'react-router-dom';
+
+import AuthService from '@/api/auth/AuthService';
+import { useApi } from '@/api/ApiHandler';
+
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
+
 import {
   Card,
   TextField,
@@ -27,8 +37,41 @@ const LoginForm = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleSignIn = () => {
-    console.log('sign in');
+  const [login] = useApi(() => AuthService.login(email, password), true, true, false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const formValidation = () => {
+    const isValidEmail = email.length !== 0;
+    const isValidPassword = password.length !== 0;
+    setEmailError(isValidEmail ? false : true);
+    setPasswordError(isValidPassword ? false : true);
+
+    if (!isValidEmail || !isValidPassword) {
+      dispatch(toggleShowNotification({ message: 'Field cannot be empty', severity: severity.ERROR }));
+      throw new Error('Form Invalid');
+    }
+  };
+
+  const handleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      formValidation();
+      const res = await login();
+      if (res.isSuccess) {
+        console.log(res.data);
+        navigate('/home');
+      }
+      setIsLoading(false);
+      setEmailError(true);
+      setPasswordError(true);
+    } catch (err) {
+      setEmailError(true);
+      setPasswordError(true);
+      setIsLoading(false);
+      console.log(err);
+    }
   };
 
   const handleClickShowPassword = () => {
