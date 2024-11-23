@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
 
-import { Card, TextField, OutlinedInput, InputLabel, FormControl, CircularProgress, Stack, Typography } from '@mui/material';
+import {
+  Card,
+  TextField,
+  OutlinedInput,
+  InputLabel,
+  FormControl,
+  CircularProgress,
+  Stack,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { routes } from '@/constants/routes';
+import { severity } from '@/constants/constants';
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
+
+import AuthService from '@/api/auth/AuthService';
+import { useApi } from '@/api/ApiHandler';
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,10 +33,12 @@ const SignUpForm = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [reEnterPasswordError, setReEnterPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignIn = () => {
-    console.log('sign in');
-  };
+  const [signUp] = useApi(() => AuthService.register(email, password), true, true, false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onEmailChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (emailError) {
@@ -36,6 +57,11 @@ const SignUpForm = () => {
         setEmailError(false);
       }
     }
+    if (password === reEnterPassword) {
+      setReEnterPasswordError(false);
+    } else {
+      setReEnterPasswordError(true);
+    }
     setPassword(event.target.value);
   };
 
@@ -45,7 +71,52 @@ const SignUpForm = () => {
     } else {
       setReEnterPasswordError(true);
     }
+    console.log(reEnterPasswordError);
     setReEnterPassword(event.target.value);
+  };
+
+  const isFormValid = () => {
+    const isValidEmail = email.length !== 0;
+    const isValidPassword = password.length !== 0;
+
+    setEmailError(isValidEmail);
+    setPasswordError(isValidPassword);
+
+    if (!isValidEmail || !isValidPassword) {
+      dispatch(toggleShowNotification({ message: 'Field cannot be empty', severity: severity.ERROR }));
+      throw new Error('Form Invalid');
+    }
+    if (!reEnterPasswordError) {
+      dispatch(toggleShowNotification({ message: 'Password Confirmation Does Not Match Password', severity: severity.ERROR }));
+      throw new Error('Form Invalid');
+    }
+  };
+
+  const handleSignUp = async () => {
+    setIsLoading(true);
+    try {
+      isFormValid();
+      const res = await signUp();
+      if (res.isSuccess) {
+        console.log(res.data);
+        navigate(routes.home);
+      }
+      setIsLoading(false);
+      setEmailError(true);
+      setPasswordError(true);
+      setReEnterPasswordError(true);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
   };
 
   return (
@@ -68,7 +139,7 @@ const SignUpForm = () => {
             value={email}
             error={emailError}
             onChange={onEmailChange}
-            onKeyDown={e => e.key === 'Enter' && handleSignIn()}
+            onKeyDown={e => e.key === 'Enter' && handleSignUp()}
           />
           <FormControl sx={{ m: 1 }} variant='outlined'>
             <InputLabel htmlFor='outlined-adornment-password' error={passwordError}>
@@ -77,10 +148,22 @@ const SignUpForm = () => {
             <OutlinedInput
               id='outlined-adornment-password'
               error={passwordError}
-              type={'password'}
+              type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={onPasswordChange}
               label='Password <6+ characters, 1 special character>'
+              endAdornment={
+                <InputAdornment position='end' className='mx-2'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </FormControl>
           <FormControl sx={{ m: 1 }} variant='outlined'>
@@ -90,17 +173,29 @@ const SignUpForm = () => {
             <OutlinedInput
               id='outlined-adornment-password'
               error={passwordError}
-              type={'password'}
+              type={showPassword ? 'text' : 'password'}
               value={reEnterPassword}
               onChange={onReEnterPasswordChange}
               label='Re-enter Password'
+              endAdornment={
+                <InputAdornment position='end' className='mx-2'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge='end'
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           </FormControl>
         </Stack>
         <div className='float-right'>
           <LoadingButton
             loading={isLoading}
-            onClick={handleSignIn}
+            onClick={handleSignUp}
             className='bg-uclaBlue normal-case w-32 h-11 text-lg rounded-lg font-Inter float-right'
             variant='contained'
             loadingIndicator={<CircularProgress size={16} className='text-bgWhite' />}

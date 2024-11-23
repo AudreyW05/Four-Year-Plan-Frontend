@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { getLocalStorageValue } from '@/utils/miscellaneous';
 
-const baseUrl = process.env.REACT_APP_API_URL;
+const baseUrl = process.env.REACT_APP_USERS_API_URL;
 
 // The shape of the JSON response.data from API endpoints.
 export interface ApiData<T = any> {

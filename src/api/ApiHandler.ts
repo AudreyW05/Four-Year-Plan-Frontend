@@ -1,5 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Changed to useNavigate
+import { routes } from '@/constants/routes';
 import { ApiData } from '@/api/ApiService';
+import { useDispatch } from 'react-redux';
+import { severity } from '@/constants/constants';
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
 
 export interface isSuccess {
   isSuccess: boolean;
@@ -13,28 +18,31 @@ export function useApi<T>(
   withLoadingNotification = true,
 ) {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); // Using useNavigate instead of useHistory
+  const dispatch = useDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function fetchApi(data?: any): Promise<ApiData<T> & isSuccess> {
     if (withLoadingNotification) {
-      console.log('Loading...');
+      dispatch(toggleShowNotification({ message: 'Loading...', severity: severity.LOADING }));
     }
     try {
       const response = await apiPromise(data);
       if (response?.message && withSuccessNotification) {
-        console.log({ message: response.message });
+        dispatch(toggleShowNotification({ message: response.message, severity: severity.SUCCESS }));
       } else if (response && withSuccessNotification) {
-        console.log({ message: 'API Call Successful' });
+        dispatch(toggleShowNotification({ message: 'API Call Successful', severity: severity.SUCCESS }));
       }
       console.log(response);
       return { ...response, isSuccess: true };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      console.error('Error: ', error);
       if (error?.data?.message && withFailureNotification) {
-        console.error({ message: error.data.message });
+        dispatch(toggleShowNotification({ message: error.data.message, severity: severity.ERROR }));
       }
       if (error?.status === 403) {
-        // history.push(Routes.authentication.login);
+        navigate(routes.authentication.login); // Navigate instead of history.push
       }
       console.log(error);
       return { ...error?.data, isSuccess: false };
