@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, FormControlLabel, Checkbox } from '@mui/material';
 
+import AuthService from '@/api/auth/AuthService';
+
 type Props = {
   onClose: () => void;
 };
@@ -10,6 +12,7 @@ const Settings = (props: Props) => {
 
   const handleClose = () => {
     props.onClose();
+    AuthService.logout();
   };
 
   const descriptionElementRef = useRef<HTMLElement>(null);

@@ -2,8 +2,6 @@ import { UserData, UserSignUpData } from '@/modules/user/types';
 import { removeLocalStorageValue, setLocalStorageValue } from '@/utils/miscellaneous';
 import ApiService, { ApiData } from '@/api/ApiService';
 
-const baseUrl = process.env.REACT_APP_USERS_API_URL;
-
 interface LoginData {
   accessToken: string;
   user: UserData;
@@ -18,7 +16,6 @@ class AuthService {
     try {
       //get the token with API call
       const response = await ApiService.request({
-        baseURL: baseUrl,
         url: `${this.getAuthUrl()}/signin`,
         method: 'POST',
         data: {

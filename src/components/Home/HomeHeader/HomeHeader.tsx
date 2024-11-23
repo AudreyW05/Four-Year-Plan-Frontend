@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Settings from '@components/Home/Settings/Settings';
+import Settings from '@/components/Home/HomeHeader/Settings/Settings';
 
 import { AppBar, Grid, Typography, Box } from '@mui/material';
 

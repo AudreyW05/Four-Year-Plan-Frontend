@@ -8,7 +8,7 @@ import { ApiData } from '@/api/ApiService';
 import { isSuccess } from '@/api/ApiHandler';
 
 const Test = () => {
-  const [login] = useApi(() => AuthService.login('audreywong@gmail.com', 'abc12345!'), true, true);
+  const [login] = useApi(() => AuthService.login('audreywong1@gmail.com', 'abc12345!!'), true, true);
 
   const [getSelf] = useApi(() => UserService.getSelf(), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);

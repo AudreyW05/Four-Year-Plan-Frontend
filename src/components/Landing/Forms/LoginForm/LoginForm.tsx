@@ -61,7 +61,7 @@ const LoginForm = () => {
       const res = await login();
       if (res.isSuccess) {
         console.log(res.data);
-        navigate('/home');
+        navigate(routes.home);
       }
       setIsLoading(false);
       setEmailError(true);
@@ -122,7 +122,7 @@ const LoginForm = () => {
             value={email}
             error={emailError}
             onChange={onEmailChange}
-            onKeyPress={e => e.key === 'Enter' && handleSignIn()}
+            onKeyDown={e => e.key === 'Enter' && handleSignIn()}
           />
           <FormControl sx={{ m: 1 }} variant='outlined'>
             <InputLabel htmlFor='outlined-adornment-password' error={passwordError}>
@@ -134,7 +134,7 @@ const LoginForm = () => {
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={onPasswordChange}
-              onKeyPress={e => e.key === 'Enter' && handleSignIn()}
+              onKeyDown={e => e.key === 'Enter' && handleSignIn()}
               endAdornment={
                 <InputAdornment position='end' className='mx-2'>
                   <IconButton
