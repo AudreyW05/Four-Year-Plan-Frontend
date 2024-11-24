@@ -13,6 +13,7 @@ import Login from '@pages/Landing/Login/Login';
 import Home from '@/pages/Home';
 import Test from '@pages/Test/Test';
 import SignUp from '@pages/Landing/SignUp';
+import ForgotPassword from '@/pages/Landing/ForgotPassword';
 
 const BaseRouter = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,8 @@ const BaseRouter = () => {
       />
       <Route path={routes.authentication.login} element={<Login />} />
       <Route path={routes.authentication.signup} element={<SignUp />} />
-      <Route path={routes.test} element={<Test />} />
+      <Route path={routes.authentication.forgotPassword} element={<ForgotPassword />}
+ />      <Route path={routes.test} element={<Test />} />
       <Route path='*' element={<Navigate to={routes.home} />} />
     </Routes>
   );
