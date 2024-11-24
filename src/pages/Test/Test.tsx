@@ -2,6 +2,7 @@ import React from 'react';
 import { useApi } from '@/api/ApiHandler';
 import AuthService from '@/api/auth/AuthService';
 import UserService from '@/api/user/UserService';
+import DegreeService from '@/api/degree/DegreeService';
 
 import { Button, Stack, Typography } from '@mui/material';
 import { ApiData } from '@/api/ApiService';
@@ -12,12 +13,17 @@ const Test = () => {
 
   const [getSelf] = useApi(() => UserService.getSelf(), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);
-  const [getUserById] = useApi(() => UserService.getUserById(1), true, true);
+  const [getUserById] = useApi(() => UserService.getUserById(2), true, true);
+  const [addCourseToUser] = useApi(() => UserService.addCourseToUser(2, 'CS 180'), true, true);
+
+  const [createDegree] = useApi(() => DegreeService.createDegree('Computer Science'), true, true);
+  const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees());
+  const [getDegreeByName] = useApi(() => DegreeService.getDegreeByName('Computer Science'));
 
   const handleButtonClick = async (func: () => Promise<ApiData & isSuccess>) => {
     const res = await func();
     if (res.isSuccess) {
-      console.log(res.data);
+      console.log(res);
     }
   };
 
@@ -48,6 +54,21 @@ const Test = () => {
             </Button>
             <Button variant='contained' onClick={() => handleButtonClick(getUserById)}>
               Get User By Id
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(addCourseToUser)}>
+              Add Course To User
+            </Button>
+          </Stack>
+          <Typography variant='h5'>Degree</Typography>
+          <Stack spacing={2} direction='row'>
+            <Button variant='contained' onClick={() => handleButtonClick(createDegree)}>
+              Create Degree
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getAllDegrees)}>
+              Get All Degrees
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getDegreeByName)}>
+              Get Degree By Name
             </Button>
           </Stack>
         </Stack>

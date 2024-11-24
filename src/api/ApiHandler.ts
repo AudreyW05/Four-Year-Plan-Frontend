@@ -33,7 +33,6 @@ export function useApi<T>(
       } else if (response && withSuccessNotification) {
         dispatch(toggleShowNotification({ message: 'API Call Successful', severity: severity.SUCCESS }));
       }
-      console.log(response);
       return { ...response, isSuccess: true };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {

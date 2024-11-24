@@ -51,6 +51,25 @@ class UserService {
       return Promise.reject(error);
     }
   }
+
+  public static async addCourseToUser(id: number, courseCode: string): Promise<ApiData> {
+    try {
+      const response = await ApiService.request(
+        {
+          url: `${this.getUserUrl()}/${id}/add-course`,
+          method: 'POST',
+          data: {
+            courseCode,
+          },
+        },
+        true,
+      );
+
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 export default UserService;
