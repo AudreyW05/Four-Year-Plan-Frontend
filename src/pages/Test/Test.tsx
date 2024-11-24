@@ -11,6 +11,7 @@ import { isSuccess } from '@/api/ApiHandler';
 
 const Test = () => {
   const [login] = useApi(() => AuthService.login('audreywong1@gmail.com', 'abc12345!!'), true, true);
+  const [register] = useApi(() => AuthService.register('audreywong1@gmail.com', 'abc12345!!'), true, true);
 
   const [getSelf] = useApi(() => UserService.getSelf(), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);
@@ -47,6 +48,9 @@ const Test = () => {
             </Button>
             <Button variant='contained' onClick={() => AuthService.logout()}>
               Sign Out
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(register)}>
+              Register
             </Button>
           </Stack>
           <Typography variant='h5'>User</Typography>
