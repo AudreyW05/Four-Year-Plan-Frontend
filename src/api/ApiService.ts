@@ -25,6 +25,7 @@ export default class ApiService {
     const accessToken: string | null = getLocalStorageValue(this.authTokenKey) ?? null;
     const updatePasswordToken: string | null = requestConfig?.headers ? (requestConfig?.headers['x-auth-token'] as string) : null;
 
+    console.log(baseUrl)
     if (isAuth && !accessToken) {
       return Promise.reject({ data: { message: 'Not authenticated' } });
     }

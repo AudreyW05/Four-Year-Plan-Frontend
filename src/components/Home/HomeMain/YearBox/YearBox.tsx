@@ -28,7 +28,7 @@ const YearBox = (props: Props) => {
   };
 
   return (
-    <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-6 my-3'>
+    <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-4 my-2'>
       {/* Year # on top */}
       <Typography className='flex-shrink-0 mb-1 text-left pl-3 pt-3' variant='h5' align='center'>
         Year {props.year}
@@ -37,7 +37,7 @@ const YearBox = (props: Props) => {
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center flex-grow gap-1 justify-between w-full'>
         {quarters.map((quarter, index) => (
-          <QuarterBox key={index} quarter={quarter} />
+          <QuarterBox key={index} quarter={quarter} year={props.year} />
         ))}
         <Box
           onClick={() => {
