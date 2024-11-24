@@ -12,14 +12,14 @@ class AuthService {
     return 'authentication';
   }
 
-  public static async login(name: string, password: string): Promise<ApiData<LoginData>> {
+  public static async login(email: string, password: string): Promise<ApiData<LoginData>> {
     try {
       //get the token with API call
       const response = await ApiService.request({
         url: `${this.getAuthUrl()}/signin`,
         method: 'POST',
         data: {
-          name,
+          email,
           password,
         },
       });
@@ -40,13 +40,13 @@ class AuthService {
     }
   }
 
-  public static async register(name: string, password: string): Promise<ApiData> {
+  public static async register(email: string, password: string): Promise<ApiData> {
     try {
       const response = await ApiService.request({
         url: `${this.getAuthUrl()}/signup`,
         method: 'POST',
         data: {
-          name,
+          email,
           password,
         },
       });
