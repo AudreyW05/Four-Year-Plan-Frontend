@@ -9,6 +9,8 @@ import { Button, Stack, Typography } from '@mui/material';
 import { ApiData } from '@/api/ApiService';
 import { isSuccess } from '@/api/ApiHandler';
 
+import { Categories, Category } from '@/modules/course/types';
+
 const Test = () => {
   const [login] = useApi(() => AuthService.login('audreywong1@gmail.com', 'abc12345!!'), true, true);
   const [register] = useApi(() => AuthService.register('audreywong1@gmail.com', 'abc12345!!'), true, true);
@@ -22,7 +24,7 @@ const Test = () => {
   const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees(), true, true);
   const [getDegreeByName] = useApi(() => DegreeService.getDegreeByName('Computer Science'), true, true);
 
-  const [createCourse] = useApi(() => CourseService.createCourse('CS 180', 4), true, true);
+  const [createCourse] = useApi(() => CourseService.createCourse('CS 180', 4, Category.UPPER_DIV), true, true);
   const [getAllCourses] = useApi(() => CourseService.getAllCourses(), true, true);
   const [getCourseByCode] = useApi(() => CourseService.getCourseByCode('CS 180'), true, true);
 
@@ -88,7 +90,7 @@ const Test = () => {
             <Button variant='contained' onClick={() => handleButtonClick(getAllCourses)}>
               Get All Courses
             </Button>
-            <Button variant='contained' onClick={() => handleButtonClick(getDegreeByName)}>
+            <Button variant='contained' onClick={() => handleButtonClick(getCourseByCode)}>
               Get Course By Code
             </Button>
           </Stack>
