@@ -36,7 +36,6 @@ export function useApi<T>(
       return { ...response, isSuccess: true };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error('Error: ', error);
       if (error?.data?.message && withFailureNotification) {
         dispatch(toggleShowNotification({ message: error.data.message, severity: severity.ERROR }));
       }

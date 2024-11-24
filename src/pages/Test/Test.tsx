@@ -3,6 +3,7 @@ import { useApi } from '@/api/ApiHandler';
 import AuthService from '@/api/auth/AuthService';
 import UserService from '@/api/user/UserService';
 import DegreeService from '@/api/degree/DegreeService';
+import CourseService from '@/api/course/CourseService';
 
 import { Button, Stack, Typography } from '@mui/material';
 import { ApiData } from '@/api/ApiService';
@@ -17,8 +18,12 @@ const Test = () => {
   const [addCourseToUser] = useApi(() => UserService.addCourseToUser(2, 'CS 180'), true, true);
 
   const [createDegree] = useApi(() => DegreeService.createDegree('Computer Science'), true, true);
-  const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees());
-  const [getDegreeByName] = useApi(() => DegreeService.getDegreeByName('Computer Science'));
+  const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees(), true, true);
+  const [getDegreeByName] = useApi(() => DegreeService.getDegreeByName('Computer Science'), true, true);
+
+  const [createCourse] = useApi(() => CourseService.createCourse('CS 180', 4), true, true);
+  const [getAllCourses] = useApi(() => CourseService.getAllCourses(), true, true);
+  const [getCourseByCode] = useApi(() => CourseService.getCourseByCode('CS 180'), true, true);
 
   const handleButtonClick = async (func: () => Promise<ApiData & isSuccess>) => {
     const res = await func();
@@ -69,6 +74,18 @@ const Test = () => {
             </Button>
             <Button variant='contained' onClick={() => handleButtonClick(getDegreeByName)}>
               Get Degree By Name
+            </Button>
+          </Stack>
+          <Typography variant='h5'>Course</Typography>
+          <Stack spacing={2} direction='row'>
+            <Button variant='contained' onClick={() => handleButtonClick(createCourse)}>
+              Create Course
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getAllCourses)}>
+              Get All Courses
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(getDegreeByName)}>
+              Get Course By Code
             </Button>
           </Stack>
         </Stack>
