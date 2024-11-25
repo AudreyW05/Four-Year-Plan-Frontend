@@ -50,7 +50,7 @@ const HomeSidebar = () => {
             </IconButton>
           </Box>
           <Box flexGrow={1} overflow={'auto'}>
-            <ClassCategories sectname={'Lower Division'}></ClassCategories>
+            <ClassCategories sectname={'Lower Division'} ></ClassCategories>
             <ClassCategories sectname={'Upper Division'}></ClassCategories>
             <ClassCategories sectname={'Math'}></ClassCategories>
             <ClassCategories sectname={'Physics'}></ClassCategories>

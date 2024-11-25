@@ -4,7 +4,8 @@ import { Grid, Paper, Typography, Box, Button, TextField } from '@mui/material';
 type Props = {
   year: string;
   quarter: string; // Name of the quarter
-  
+  classes: { [year: string]: { [quarter: string]: string[] } };
+  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
 };
 
 const ClassBox = (props: Props) => {

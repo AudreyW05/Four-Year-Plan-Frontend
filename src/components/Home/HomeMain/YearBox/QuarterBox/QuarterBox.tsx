@@ -6,6 +6,8 @@ import { Box, Typography } from '@mui/material';
 type Props = {
   year: string;
   quarter: string;
+  classes: { [year: string]: { [quarter: string]: string[] } };
+  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
 };
 
 
@@ -21,6 +23,8 @@ const QuarterBox = (props: Props) => {
       <ClassBox 
         year={props.year} 
         quarter={props.quarter} 
+        classes={props.classes}
+        setClasses={props.setClasses}
       ></ClassBox>
     </Box>
   );

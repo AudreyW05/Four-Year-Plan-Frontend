@@ -12,6 +12,31 @@ const HomeMain = () => {
   const [numOfYears, setNumOfYears] = useState<number>(4);
   const [addIsHovered, setAddIsHovered] = useState<boolean>(false);
   const [removeIsHovered, setRemoveIsHovered] = useState<boolean>(false);
+
+ // Global state for classes across all years and quarters
+ const [classes, setClasses] = useState<{ [key: string]: { [quarter: string]: string[] } }>({
+  '1': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+  },
+  '2': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+  },
+  '3': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+  },
+  '4': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+  },
+});
+
   const handleAdd = () => {
     if (numOfYears < 6) {
       setNumOfYears(numOfYears + 1);
@@ -29,7 +54,12 @@ const HomeMain = () => {
         <Stack className='mt-24 w-full items-center justify-center'>
           {/* Classes will be rendered based on numOfClasses */}
           {[...Array(numOfYears)].map((_, index) => (
-            <YearBox key={index} year={(index + 1).toString()} />
+            <YearBox 
+            key={index} 
+            year={(index + 1).toString()}
+            classes={classes} // Pass the global classes state
+            setClasses={setClasses} // Pass the function to update the global state
+            />
           ))}
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>
             {/* Add Box */}

@@ -9,6 +9,8 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 type Props = {
   year: string;
+  classes: { [year: string]: { [quarter: string]: string[] } };
+  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
 };
 
 const YearBox = (props: Props) => {
@@ -37,7 +39,13 @@ const YearBox = (props: Props) => {
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center flex-grow gap-1 justify-between w-full'>
         {quarters.map((quarter, index) => (
-          <QuarterBox key={index} quarter={quarter} year={props.year} />
+          <QuarterBox 
+            key={index}
+            quarter={quarter}
+            year={props.year}
+            classes={props.classes}
+            setClasses={props.setClasses}
+          />
         ))}
         <Box
           onClick={() => {
