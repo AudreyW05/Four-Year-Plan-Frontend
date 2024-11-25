@@ -7,7 +7,6 @@ type Props = {
   
 };
 
-
 const ClassBox = (props: Props) => {
   const [classNames, setClassNames] = useState<string[]>([]); // Manage class names dynamically
   const [units, setUnits] = useState<number>(0); // Start with 0 units
@@ -18,7 +17,7 @@ const ClassBox = (props: Props) => {
       setUnits(units + Number(classUnits)); // Change 4 units to actual class units
     }
   };
-  const [classes, setClasses] = useState<string[]>([])
+  
 
   function handleOnDrop(e: React.DragEvent) {
     const className = e.dataTransfer.getData("className") as string;
@@ -29,6 +28,15 @@ const ClassBox = (props: Props) => {
   function handleDragOver(e: React.DragEvent){
     e.preventDefault();
   }
+
+  const removeClass = (classToRemove: string, classUnits: string) => {
+
+    if (classToRemove.trim() !== '') {
+      setClassNames(classNames.filter((className) => className !== classToRemove.trim()));
+      setUnits(units - Number(classUnits));
+    }
+  };
+
   function handleOnDrag(e: React.DragEvent, className: string, classUnits: number) {
     e.dataTransfer.setData("className", className)
     e.dataTransfer.setData("classUnits", classUnits.toString())
@@ -42,7 +50,9 @@ const ClassBox = (props: Props) => {
           {Array.from({ length: Math.max(4, classNames.length) }).map((_, index) => (
             <Grid className='justify-items-stretch' item xs={6} key={index}>
               {index < classNames.length ? (
-                <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-200px min-w-[100px] whitespace-nowrap" elevation={2} draggable>
+                <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-200px min-w-[100px] whitespace-nowrap" elevation={2} draggable
+                onDragStart={(e) => handleOnDrag(e, classNames[index], 4)}
+                >
                   <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant="body2">{classNames[index]}</Typography>
                 </Paper>
               ) : (
