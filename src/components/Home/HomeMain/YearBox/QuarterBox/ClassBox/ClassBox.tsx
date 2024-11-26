@@ -5,41 +5,53 @@ type Props = {
   year: string;
   quarter: string; // Name of the quarter
   classes: { [year: string]: { [quarter: string]: string[] } };
+  units: { [year: string]: { [quarter: string]: number[] } };
   setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
+  setUnits: React.Dispatch<React.SetStateAction< { [year: string]: { [quarter: string]: number[] } } >>;
 };
 
 const ClassBox = (props: Props) => {
-  const [classNames, setClassNames] = useState<string[]>([]); // Manage class names dynamically
-  const [units, setUnits] = useState<number>(0); // Start with 0 units
-  // Set classNames from props.classes when the component mounts or when props.classes changes
-  useEffect(() => {
-    // Check if the year and quarter exist in props.classes
-    if (props.classes[props.year] && props.classes[props.year][props.quarter]) {
-      setClassNames(props.classes[props.year][props.quarter]);
-    }
-  }, [props.classes, props.year, props.quarter]);
+  const [totalUnits, setTotalUnits] = useState<number>(0);
 
+  useEffect(() => {
+    const newTotal = props.units[props.year][props.quarter].reduce((sum, unit) => sum + unit, 0);
+    setTotalUnits(newTotal);
+  }), [props.classes, props.units]
   const addClass = (className: string, classUnits: string) => {
-    if (classNames.length < 5) {
-      setClassNames([...classNames, className]);
-      setUnits(units + Number(classUnits)); // Change 4 units to actual class units
+    if (props.classes[props.year][props.quarter].length < 5) {
+      props.setClasses((prevClasses) => {
+        const updatedClasses = { ...prevClasses };
+        // Add the new className to the relevant year and quarter
+        updatedClasses[props.year][props.quarter].push(className);
+        props.setUnits((prevUnits) => {
+          console.log(prevUnits);
+          const updatedUnits = {...prevUnits};
+          // Add new units
+          updatedUnits[props.year][props.quarter].push(Number(classUnits));
+          return updatedUnits;
+        });
+        return updatedClasses; // Return the updated state
+      });
     }
   };
   
 
   function handleOnDrop(e: React.DragEvent) {
+    console.log("on drop")
     const className = e.dataTransfer.getData("className") as string;
     const classUnits = e.dataTransfer.getData("classUnits") as string;
     addClass(className, classUnits);
   }
 
   function handleDragOver(e: React.DragEvent){
+    console.log("on drag over")
     e.preventDefault();
 
   }
 
 
   function handleOnDrag(e: React.DragEvent, className: string, classUnits: number) {
+    console.log("on drag");
     e.dataTransfer.setData("className", className)
     e.dataTransfer.setData("classUnits", classUnits.toString())
     e.dataTransfer.setData("year", props.year)
@@ -51,13 +63,13 @@ const ClassBox = (props: Props) => {
       {/* Dynamic Grid for classes */}
       <Box className="border border-dashed border-textGray rounded-md p-3 gap-2" onDrop={handleOnDrop} onDragOver={handleDragOver}>
         <Grid container spacing={1.5}>
-          {Array.from({ length: Math.max(4, classNames.length) }).map((_, index) => (
+          {Array.from({ length: Math.max(4, props.classes[props.year][props.quarter].length) }).map((_, index) => (
             <Grid className='justify-items-stretch' item xs={6} key={index}>
-              {index < classNames.length ? (
+              {index < props.classes[props.year][props.quarter].length ? (
                 <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-200px min-w-[100px] whitespace-nowrap" elevation={2} draggable
-                onDragStart={(e) => handleOnDrag(e, classNames[index], 4)}
+                onDragStart={(e) => handleOnDrag(e, props.classes[props.year][props.quarter][index], 4)}
                 >
-                  <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant="body2">{classNames[index]}</Typography>
+                  <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant="body2">{props.classes[props.year][props.quarter][index]}</Typography>
                 </Paper>
               ) : (
                 <Paper className="fontsize-sm font-Inter bg-bgGray text-textGray p-4 text-center  h-50px opacity-30" elevation={2}>
@@ -73,7 +85,7 @@ const ClassBox = (props: Props) => {
       {/* Classes display */}
       <Box className="flex justify-end w-full">
         <Typography className="font-Inter text-textGray text-sm pt-2 pb-2">
-          Classes {classNames.length} / Units {units}
+          Classes {props.classes[props.year][props.quarter].length} / Units {totalUnits}
         </Typography>
       </Box>
     </Box>

@@ -10,7 +10,9 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 type Props = {
   year: string;
   classes: { [year: string]: { [quarter: string]: string[] } };
+  units: { [year: string]: { [quarter: string]: number[] } };
   setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
+  setUnits: React.Dispatch<React.SetStateAction< { [year: string]: { [quarter: string]: number[] } } >>;
 };
 
 const YearBox = (props: Props) => {
@@ -44,7 +46,9 @@ const YearBox = (props: Props) => {
             quarter={quarter}
             year={props.year}
             classes={props.classes}
+            units={props.units}
             setClasses={props.setClasses}
+            setUnits={props.setUnits}
           />
         ))}
         <Box

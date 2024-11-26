@@ -13,47 +13,24 @@ const HomeMain = () => {
   const [addIsHovered, setAddIsHovered] = useState<boolean>(false);
   const [removeIsHovered, setRemoveIsHovered] = useState<boolean>(false);
 
- // Global state for classes across all years and quarters
- const [classes, setClasses] = useState<{ [key: string]: { [quarter: string]: string[] } }>({
-  '1': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-  '2': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-  '3': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-  '4': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-  '5': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-  '6': {
-    'Fall Quarter': [],
-    'Winter Quarter': [],
-    'Spring Quarter': [],
-    'Summer Quarter': [],
-  },
-});
-  
-
+  // Global state for units across all years and quarters
+  const [units, setUnits] = useState<{ [key: string]: { [quarter: string]: number[] }}> ({
+    '1': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+    '2': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+    '3': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+    '4': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+    '5': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+    '6': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
+  });
+  // Global state for classes across all years and quarters
+  const [classes, setClasses] = useState<{ [key: string]: { [quarter: string]: string[] } }> ({
+    '1': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+    '2': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+    '3': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+    '4': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+    '5': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+    '6': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [], },
+  });
   
   const handleAdd = () => {
     if (numOfYears < 6) {
@@ -76,7 +53,9 @@ const HomeMain = () => {
             key={index} 
             year={(index + 1).toString()}
             classes={classes} // Pass the global classes state
-            setClasses={setClasses} // Pass the function to update the global state
+            units={units} // Pass the global units state
+            setClasses={setClasses} // Pass the function to update the global classname state
+            setUnits={setUnits} // Pass the function to update global units
             />
           ))}
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>
@@ -109,6 +88,7 @@ const HomeMain = () => {
       </Stack>
       <TrashBox 
       setClasses={setClasses}
+      setUnits={setUnits}
       />
     </>
   );
