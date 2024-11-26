@@ -55,12 +55,11 @@ const Settings = (props: Props) => {
                 Lower Divs
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Com Sci 1' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 31' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 32' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 33' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 35L' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M51A' />
+                {props.allCourses
+                  .filter(course => course.category === Category.LOWER_DIV)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
 
@@ -69,14 +68,11 @@ const Settings = (props: Props) => {
                 Upper Divs
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Com Sci 111' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 118' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 130' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 131' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 180' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 181' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M151B' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M152A' />
+                {props.allCourses
+                  .filter(course => course.category === Category.UPPER_DIV)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
 
@@ -85,13 +81,11 @@ const Settings = (props: Props) => {
                 Math
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Math 31A' />
-                <FormControlLabel control={<Checkbox />} label='Math 31B' />
-                <FormControlLabel control={<Checkbox />} label='Math 32A' />
-                <FormControlLabel control={<Checkbox />} label='Math 32B' />
-                <FormControlLabel control={<Checkbox />} label='Math 33A' />
-                <FormControlLabel control={<Checkbox />} label='Math 33B' />
-                <FormControlLabel control={<Checkbox />} label='Math 61' />
+                {props.allCourses
+                  .filter(course => course.category === Category.MATH)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
 
@@ -100,67 +94,36 @@ const Settings = (props: Props) => {
                 Physics
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Physics 1A' />
-                <FormControlLabel control={<Checkbox />} label='Physics 1B' />
-                <FormControlLabel control={<Checkbox />} label='Physics 1C' />
-                <FormControlLabel control={<Checkbox />} label='Physics 4AL/4BL' />
+                {props.allCourses
+                  .filter(course => course.category === Category.PHYSICS)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Probability
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Probability' />
-              </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                CS Electives
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='CS Elective 1' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 2' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 3' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 4' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 5' />
-              </Box>
-            </Box>
-
             <Box>
               <Typography variant='h6' gutterBottom fontWeight='bold'>
                 General Education
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='GE 1' />
-                <FormControlLabel control={<Checkbox />} label='GE 2' />
-                <FormControlLabel control={<Checkbox />} label='GE 3' />
-                <FormControlLabel control={<Checkbox />} label='GE 4' />
-                <FormControlLabel control={<Checkbox />} label='GE 5' />
+                {props.allCourses
+                  .filter(course => course.category === Category.GE)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
 
             <Box>
               <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Tech Breadth
+                Other
               </Typography>
               <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 1' />
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 2' />
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 3' />
-              </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Science and Technology
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 1' />
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 2' />
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 3' />
+                {props.allCourses
+                  .filter(course => course.category === Category.OTHER)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </Box>
             </Box>
           </Box>
