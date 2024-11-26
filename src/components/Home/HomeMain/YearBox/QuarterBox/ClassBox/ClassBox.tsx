@@ -11,6 +11,13 @@ type Props = {
 const ClassBox = (props: Props) => {
   const [classNames, setClassNames] = useState<string[]>([]); // Manage class names dynamically
   const [units, setUnits] = useState<number>(0); // Start with 0 units
+  // Set classNames from props.classes when the component mounts or when props.classes changes
+  useEffect(() => {
+    // Check if the year and quarter exist in props.classes
+    if (props.classes[props.year] && props.classes[props.year][props.quarter]) {
+      setClassNames(props.classes[props.year][props.quarter]);
+    }
+  }, [props.classes, props.year, props.quarter]);
 
   const addClass = (className: string, classUnits: string) => {
     if (classNames.length < 5) {
@@ -28,19 +35,15 @@ const ClassBox = (props: Props) => {
 
   function handleDragOver(e: React.DragEvent){
     e.preventDefault();
+
   }
 
-  const removeClass = (classToRemove: string, classUnits: string) => {
-
-    if (classToRemove.trim() !== '') {
-      setClassNames(classNames.filter((className) => className !== classToRemove.trim()));
-      setUnits(units - Number(classUnits));
-    }
-  };
 
   function handleOnDrag(e: React.DragEvent, className: string, classUnits: number) {
     e.dataTransfer.setData("className", className)
     e.dataTransfer.setData("classUnits", classUnits.toString())
+    e.dataTransfer.setData("year", props.year)
+    e.dataTransfer.setData("quarter", props.quarter)
   }
 
   return (

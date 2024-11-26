@@ -19,24 +19,42 @@ const HomeMain = () => {
     'Fall Quarter': [],
     'Winter Quarter': [],
     'Spring Quarter': [],
+    'Summer Quarter': [],
   },
   '2': {
     'Fall Quarter': [],
     'Winter Quarter': [],
     'Spring Quarter': [],
+    'Summer Quarter': [],
   },
   '3': {
     'Fall Quarter': [],
     'Winter Quarter': [],
     'Spring Quarter': [],
+    'Summer Quarter': [],
   },
   '4': {
     'Fall Quarter': [],
     'Winter Quarter': [],
     'Spring Quarter': [],
+    'Summer Quarter': [],
+  },
+  '5': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+    'Summer Quarter': [],
+  },
+  '6': {
+    'Fall Quarter': [],
+    'Winter Quarter': [],
+    'Spring Quarter': [],
+    'Summer Quarter': [],
   },
 });
+  
 
+  
   const handleAdd = () => {
     if (numOfYears < 6) {
       setNumOfYears(numOfYears + 1);
@@ -89,7 +107,9 @@ const HomeMain = () => {
           </Stack>
         </Stack>
       </Stack>
-      <TrashBox />
+      <TrashBox 
+      setClasses={setClasses}
+      />
     </>
   );
 };
