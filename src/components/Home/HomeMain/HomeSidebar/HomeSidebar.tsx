@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ClassCategories from './ClassCategories/ClassCategories';
 import { Box, Drawer, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import UnitBar from './UnitBar/UnitBar';
 
-const HomeSidebar = () => {
+type Props = {
+  units: { [year: string]: { [quarter: string]: number[] } };
+}
+
+const HomeSidebar = (props: Props) => {
   const [open, setOpen] = useState(false);
+  const [totalSum, setTotalSum] = useState<number>(0);
+
+  const sumUnits = ( units: { [year: string]: { [quarter: string]: number[] } }) => {
+    let totalUnits = 0;
+    // Iterate over years
+    for (const year in units) {
+      // Iterate over quarters
+      for (const quarter in units[year]) {
+        // Sum up the values in the number[] array for the current quarter
+        totalUnits += units[year][quarter].reduce((acc, value) => acc + value, 0);
+      }
+    }
+  
+    return totalUnits;
+  };
+
+  useEffect(() => {
+    const sum = sumUnits(props.units);
+    setTotalSum(sum);
+  }, [props.units]); 
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -58,7 +82,7 @@ const HomeSidebar = () => {
             <ClassCategories sectname={'Others'}></ClassCategories>
           </Box>
           <Box mt={1}>
-            <UnitBar value={50}></UnitBar>
+            <UnitBar value={totalSum}></UnitBar>
           </Box>
         </Box>
       </Drawer>

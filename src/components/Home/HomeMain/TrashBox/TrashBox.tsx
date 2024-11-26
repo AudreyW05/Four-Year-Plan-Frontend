@@ -15,27 +15,29 @@ const TrashBox = (props: Props) => {
 
   function handleOnDrop(e: React.DragEvent) {
     e.preventDefault();
-    const className = e.dataTransfer.getData("className") as string;
-    const classUnits = e.dataTransfer.getData("classUnits") as string;
-    const year = e.dataTransfer.getData("year") as string;
-    const quarter = e.dataTransfer.getData("quarter") as string;
-    props.setClasses((prevClasses) => {
-      const updatedClasses = { ...prevClasses };
-      const classIndex = updatedClasses[year][quarter].findIndex(
-        (existingClass) => existingClass === className
-      );
-      updatedClasses[year][quarter] = updatedClasses[year][quarter].filter(
-        (_, index) => index !== classIndex
-      );
-      props.setUnits((prevUnits) => {
-        const updatedUnits = {...prevUnits};
-        updatedUnits[year][quarter] = updatedUnits[year][quarter].filter(
+    if (e.dataTransfer.getData("fromSidebar") as string === "0") {
+      const className = e.dataTransfer.getData("className") as string;
+      const classUnits = e.dataTransfer.getData("classUnits") as string;
+      const year = e.dataTransfer.getData("year") as string;
+      const quarter = e.dataTransfer.getData("quarter") as string;
+      props.setClasses((prevClasses) => {
+        const updatedClasses = { ...prevClasses };
+        const classIndex = updatedClasses[year][quarter].findIndex(
+          (existingClass) => existingClass === className
+        );
+        updatedClasses[year][quarter] = updatedClasses[year][quarter].filter(
           (_, index) => index !== classIndex
         );
-        return updatedUnits;
+        props.setUnits((prevUnits) => {
+          const updatedUnits = {...prevUnits};
+          updatedUnits[year][quarter] = updatedUnits[year][quarter].filter(
+            (_, index) => index !== classIndex
+          );
+          return updatedUnits;
+        });
+        return updatedClasses;
       });
-      return updatedClasses;
-    });
+    }
     console.log("removed class");
     setIsDraggingOver(false);
   }

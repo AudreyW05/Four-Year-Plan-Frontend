@@ -15,10 +15,9 @@ type Props = {
 
 const QuarterBox = (props: Props) => {
 
- 
 
   return (
-    <Box className='m-2 space-y-1'>
+    <Box className='flex-1 m-2 space-y-1'>
       <Typography className='font-Inter bg-bgGray text-textGray pb-2' align='left'>
         {props.quarter}
       </Typography>

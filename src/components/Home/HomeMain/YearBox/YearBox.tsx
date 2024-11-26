@@ -31,15 +31,43 @@ const YearBox = (props: Props) => {
     }
   };
 
+  const removeQuarter = () => {
+    // Clear classes for the "Summer Quarter"
+    props.setClasses((prevClasses) => ({
+      ...prevClasses,
+      [props.year]: {
+        ...prevClasses[props.year],
+        'Summer Quarter': [], // Reset classes for Summer Quarter
+      },
+    }));
+
+    // Clear units for the "Summer Quarter"
+    props.setUnits((prevUnits) => ({
+      ...prevUnits,
+      [props.year]: {
+        ...prevUnits[props.year],
+        'Summer Quarter': [0, 0, 0, 0], // Reset units for Summer Quarter
+      },
+    }));
+  };
+  
+  const handleClick = () => {
+    if (showSummer) {
+      removeQuarter();
+    }
+    toggleSummer();
+    setIsHovered(false);
+  }
+
   return (
     <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-4 my-2'>
       {/* Year # on top */}
-      <Typography className='flex-shrink-0 mb-1 text-left pl-3 pt-3' variant='h5' align='center'>
+      <Typography className='font-Inter flex-shrink-0 mb-1 text-left pl-3 pt-3' variant='h5' align='center'>
         Year {props.year}
       </Typography>
 
       {/* QuarterBoxes will flex here */}
-      <Box className='bg-bgGray text-textGray flex flex-row items-center flex-grow gap-1 justify-between w-full'>
+      <Box className='bg-bgGray text-textGray flex flex-row items-center gap-1 justify-between w-full'>
         {quarters.map((quarter, index) => (
           <QuarterBox 
             key={index}
@@ -52,9 +80,7 @@ const YearBox = (props: Props) => {
           />
         ))}
         <Box
-          onClick={() => {
-            toggleSummer(), setIsHovered(false);
-          }}
+          onClick={() => handleClick()}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >

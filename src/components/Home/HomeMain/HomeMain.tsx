@@ -45,7 +45,7 @@ const HomeMain = () => {
   return (
     <>
       <Stack direction='row' className='w-full'>
-        <HomeSidebar />
+        <HomeSidebar units={units}/>
         <Stack className='mt-24 w-full items-center justify-center'>
           {/* Classes will be rendered based on numOfClasses */}
           {[...Array(numOfYears)].map((_, index) => (

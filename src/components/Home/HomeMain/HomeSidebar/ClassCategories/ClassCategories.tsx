@@ -15,6 +15,7 @@ const ClassCategories = (props: Props) => {
   function handleOnDrag(e: React.DragEvent, className: string, classUnits: number) {
     e.dataTransfer.setData("className", className)
     e.dataTransfer.setData("classUnits", classUnits.toString())
+    e.dataTransfer.setData("fromSidebar", "1")
   }
   
   

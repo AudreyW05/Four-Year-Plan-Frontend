@@ -62,18 +62,18 @@ const ClassBox = (props: Props) => {
     <Box className="bg-bgGray flex flex-col items-center">
       {/* Dynamic Grid for classes */}
       <Box className="border border-dashed border-textGray rounded-md p-3 gap-2" onDrop={handleOnDrop} onDragOver={handleDragOver}>
-        <Grid container spacing={1.5}>
+        <Grid container rowSpacing={1} columnSpacing={1} spacing={1.5}>
           {Array.from({ length: Math.max(4, props.classes[props.year][props.quarter].length) }).map((_, index) => (
-            <Grid className='justify-items-stretch' item xs={6} key={index}>
+            <Grid className='justify-items-stretch' item xs={6} md={6} sm={6} key={index}>
               {index < props.classes[props.year][props.quarter].length ? (
-                <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-200px min-w-[100px] whitespace-nowrap" elevation={2} draggable
+                <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-100px min-w-[90px] whitespace-nowrap" elevation={2} draggable
                 onDragStart={(e) => handleOnDrag(e, props.classes[props.year][props.quarter][index], 4)}
                 >
                   <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant="body2">{props.classes[props.year][props.quarter][index]}</Typography>
                 </Paper>
               ) : (
-                <Paper className="fontsize-sm font-Inter bg-bgGray text-textGray p-4 text-center  h-50px opacity-30" elevation={2}>
-                  <Typography variant="body2">Empty</Typography>
+                <Paper className="font-Inter bg-bgGray text-textGray py-4 h-50px w-100px min-w-[90px] whitespace-nowrap opacity-30" elevation={2}>
+                  <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant='body2'>Empty</Typography>
                 </Paper>
               )}
             </Grid>
