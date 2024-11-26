@@ -36,11 +36,15 @@ const HomeMain = () => {
     if (numOfYears < 6) {
       setNumOfYears(numOfYears + 1);
     }
+    setAddIsHovered(false);
   };
   const handleRemove = () => {
+    
     if (numOfYears > 1) {
       setNumOfYears(numOfYears - 1);
     }
+    setRemoveIsHovered(false);
+
   };
   return (
     <>
@@ -62,9 +66,7 @@ const HomeMain = () => {
             {/* Add Box */}
             {numOfYears < 6 && (
               <Box
-                onClick={() => {
-                  handleAdd(), setAddIsHovered(false);
-                }}
+                onClick={() => handleAdd()}
                 onMouseEnter={() => setAddIsHovered(true)}
                 onMouseLeave={() => setAddIsHovered(false)}
               >
@@ -74,9 +76,7 @@ const HomeMain = () => {
             {/* Remove Box */}
             {numOfYears > 1 && (
               <Box
-                onClick={() => {
-                  handleRemove(), setRemoveIsHovered(false);
-                }}
+                onClick={() => handleRemove()}
                 onMouseEnter={() => setRemoveIsHovered(true)}
                 onMouseLeave={() => setRemoveIsHovered(false)}
               >
