@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, FormControlLabel, Checkbox } from '@mui/material';
 
 import AuthService from '@/api/auth/AuthService';
+import { Category, CourseData } from '@/modules/course/types';
 
 type Props = {
   onClose: () => void;
+  allCourses: CourseData[];
 };
 
 const Settings = (props: Props) => {
-  const scroll = 'paper';
-
   const handleClose = () => {
     props.onClose();
     AuthService.logout();
@@ -26,28 +26,27 @@ const Settings = (props: Props) => {
     <Dialog
       open={true}
       onClose={handleClose}
-      scroll={scroll}
+      scroll='paper'
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
       maxWidth='md'
-      fullWidth={true}
+      fullWidth
     >
       <DialogTitle id='scroll-dialog-title' className='flex justify-between items-center'>
         <span>Settings</span>
         <Button onClick={handleClose}>Sign Out</Button>
       </DialogTitle>
-      <DialogContent dividers={scroll === 'paper'}>
+      <DialogContent>
         <DialogContentText id='scroll-dialog-description' ref={descriptionElementRef} tabIndex={-1}>
           <div className='space-y-6'>
             <div>
               <h2 className='text-lg font-semibold'>Lower Divs</h2>
               <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Com Sci 1' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 31' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 32' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 33' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 35L' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M51A' />
+                {props.allCourses
+                  ?.filter(course => course.category === Category.LOWER_DIV)
+                  .map(course => (
+                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
+                  ))}
               </div>
             </div>
 

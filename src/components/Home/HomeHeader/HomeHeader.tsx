@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import Settings from '@/components/Home/HomeHeader/Settings/Settings';
 
 import { AppBar, Grid, Typography, Box } from '@mui/material';
+import { Category, CourseData } from '@/modules/course/types';
 
-const HomeHeader = () => {
+type Props = {
+  allCourses: CourseData[];
+};
+
+const HomeHeader = (props: Props) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   };
+
+  // setLower(props.allCourses?.filter(course => course.category === Category.LOWER_DIV));
 
   return (
     <>
@@ -25,7 +32,7 @@ const HomeHeader = () => {
           </div>
         </Grid>
       </AppBar>
-      {showSettings && <Settings onClose={handleShowSettings} />}
+      {showSettings && <Settings onClose={handleShowSettings} allCourses={props.allCourses} />}
     </>
   );
 };

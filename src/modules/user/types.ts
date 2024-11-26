@@ -6,4 +6,6 @@ export interface UserSignUpData {
 export interface UserData {
   id: number;
   email: string;
+  password: string;
+  units: number;
 }
