@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { TornadoSharp } from '@mui/icons-material';
 
 const HomeMain = () => {
   const [numOfYears, setNumOfYears] = useState<number>(4);
@@ -38,14 +39,41 @@ const HomeMain = () => {
     }
     setAddIsHovered(false);
   };
+  
   const handleRemove = () => {
-    
+    removeYear(String(numOfYears));
     if (numOfYears > 1) {
       setNumOfYears(numOfYears - 1);
     }
     setRemoveIsHovered(false);
 
   };
+
+  const removeYear = (year: string) => {
+    // Clear classes for the entire year across all quarters
+    setClasses((prevClasses) => ({
+      ...prevClasses,
+      [year]: {
+        'Fall Quarter': [], // Reset classes for Fall Quarter
+        'Winter Quarter': [], // Reset classes for Winter Quarter
+        'Spring Quarter': [], // Reset classes for Spring Quarter
+        'Summer Quarter': [], // Reset classes for Summer Quarter
+      },
+    }));
+  
+    // Clear units for the entire year across all quarters
+    setUnits((prevUnits) => ({
+      ...prevUnits,
+      [year]: {
+        'Fall Quarter': [0, 0, 0, 0], // Reset units for Fall Quarter (set to zeros)
+        'Winter Quarter': [0, 0, 0, 0], // Reset units for Winter Quarter (set to zeros)
+        'Spring Quarter': [0, 0, 0, 0], // Reset units for Spring Quarter (set to zeros)
+        'Summer Quarter': [0, 0, 0, 0], // Reset units for Summer Quarter (set to zeros)
+      },
+    }));
+  };
+  
+  
   return (
     <>
       <Stack direction='row' className='w-full'>
