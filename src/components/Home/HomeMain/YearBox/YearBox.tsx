@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import QuarterBox from '@components/Home/HomeMain/YearBox/QuarterBox/QuarterBox';
 import { Box, Typography } from '@mui/material';
-import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -39,12 +38,13 @@ const YearBox = (props: Props) => {
       const courseYear = Math.floor(course.yearQuarter / 10);
       const courseQuarter = course.yearQuarter % 10; // if 4, summer quarter
 
-      if (courseYear === Number(year) && courseQuarter === 4) { // if course is in year's summer quarter, remove
+      if (courseYear === Number(year) && courseQuarter === 4) {
+        // if course is in year's summer quarter, remove
         props.handleDeleteCourse(course.code);
       }
-    })
+    });
   };
-  
+
   const handleClick = () => {
     if (showSummer) {
       removeQuarter(props.year);
@@ -63,7 +63,8 @@ const YearBox = (props: Props) => {
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center gap-1 justify-between w-full'>
         {quarters.map((quarter, _) => (
-          <QuarterBox 
+          <QuarterBox
+            key={quarter}
             year={props.year}
             quarter={quarter}
             myCourses={props.myCourses}
