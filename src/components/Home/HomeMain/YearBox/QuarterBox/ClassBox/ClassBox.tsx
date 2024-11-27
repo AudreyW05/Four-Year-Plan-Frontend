@@ -13,27 +13,25 @@ type Props = {
 
 const ClassBox = (props: Props) => {
   function handleOnDrop(e: React.DragEvent) {
-    console.log("on drop")
-    const year = e.dataTransfer.getData("year") as string;
-    const quarterString = e.dataTransfer.getData("quarter") as string;
-    const code = e.dataTransfer.getData("className") as string;
-    const units = e.dataTransfer.getData("classUnits") as string;
-    const fromSidebar = e.dataTransfer.getData("fromSidebar") as string;
+    console.log('on drop');
+    const year = e.dataTransfer.getData('year') as string;
+    const quarterString = e.dataTransfer.getData('quarter') as string;
+    const code = e.dataTransfer.getData('className') as string;
+    const units = e.dataTransfer.getData('classUnits') as string;
+    const fromSidebar = e.dataTransfer.getData('fromSidebar') as string;
     let quarter: number;
-    
-    let courseData: CreateCourseData;
-    if (fromSidebar === "1") { // from
-       courseData = {
-        code: code,
-        year: Number(year),
-        quarter:
-      }
-    }
-    else {
 
-    }
-   
+    // let courseData: CreateCourseData;
+    //   if (fromSidebar === "1") { // from
+    //      courseData = {
+    //       code: code,
+    //       year: Number(year),
+    //       quarter:
+    //     }
+    //   }
+    //   else {
 
+    //   }
   }
 
   function handleDragOver(e: React.DragEvent) {
@@ -54,14 +52,14 @@ const ClassBox = (props: Props) => {
       {/* Dynamic Grid for classes */}
       <Box className='border border-dashed border-textGray rounded-md p-3 gap-2' onDrop={handleOnDrop} onDragOver={handleDragOver}>
         <Grid container rowSpacing={1} columnSpacing={1} spacing={1.5}>
-          {Array.from({ length: Math.max(4, props.courses.length) }).map((_, index) => (
+          {Array.from({ length: Math.max(4, props.myCourses.length) }).map((_, index) => (
             <Grid className='justify-items-stretch' item xs={6} md={6} sm={6} key={index}>
-              {index < props.courses.length ? (
+              {index < props.myCourses.length ? (
                 <Paper
                   className='font-Inter bg-bgGray text-textGray py-4 h-50px w-100px min-w-[90px] whitespace-nowrap'
                   elevation={2}
                   draggable
-                  onDragStart={e => handleOnDrag(e, props.courses[index])}
+                  onDragStart={e => handleOnDrag(e, props.myCourses[index])}
                 >
                   <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant='body2'>
                     {/* {props.classes[props.year][props.quarter][index]} */}
@@ -85,8 +83,8 @@ const ClassBox = (props: Props) => {
       {/* Classes display */}
       <Box className='flex justify-end w-full'>
         <Typography className='font-Inter text-textGray text-sm pt-2 pb-2'>
-          Classes {props.courses.length} / Units{' '}
-          {props.courses.reduce((total, courses) => {
+          Classes {props.myCourses.length} / Units{' '}
+          {props.myCourses.reduce((total, courses) => {
             return total + courses.units;
           }, 0)}
         </Typography>
