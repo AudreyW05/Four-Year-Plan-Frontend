@@ -7,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
   year: string;
@@ -50,7 +51,7 @@ const YearBox = (props: Props) => {
     }
     toggleSummer();
     setIsHovered(false);
-  }
+  };
 
   return (
     <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-4 my-2'>
@@ -71,11 +72,7 @@ const YearBox = (props: Props) => {
             handleDeleteCourse={props.handleDeleteCourse}
           />
         ))}
-        <Box
-          onClick={() => handleClick()}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+        <Box onClick={() => handleClick()} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
           {!isHovered ? (
             showSummer ? (
               <RemoveCircleOutlineIcon className='text-textGray' />
@@ -94,4 +91,3 @@ const YearBox = (props: Props) => {
 };
 
 export default YearBox;
-

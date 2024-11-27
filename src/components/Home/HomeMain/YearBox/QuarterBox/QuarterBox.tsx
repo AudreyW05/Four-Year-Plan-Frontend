@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ClassBox from '@components/Home/HomeMain/YearBox/QuarterBox/ClassBox/ClassBox';
 import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 import { Box, Typography } from '@mui/material';
+import { CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
   year: string;
@@ -12,10 +13,7 @@ type Props = {
   handleDeleteCourse: (code: string) => void;
 };
 
-
 const QuarterBox = (props: Props) => {
-
-
   return (
     <Box className='flex-1 m-2 space-y-1'>
       <Typography className='font-Inter bg-bgGray text-textGray pb-2' align='left'>
@@ -33,6 +31,5 @@ const QuarterBox = (props: Props) => {
     </Box>
   );
 };
-
 
 export default QuarterBox;

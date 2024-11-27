@@ -7,8 +7,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { PropaneSharp, TornadoSharp } from '@mui/icons-material';
-import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
+import { TornadoSharp } from '@mui/icons-material';
+import { CourseData, CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
   userId: number;
@@ -22,7 +22,7 @@ const HomeMain = (props: Props) => {
   const [numOfYears, setNumOfYears] = useState<number>(4);
   const [addIsHovered, setAddIsHovered] = useState<boolean>(false);
   const [removeIsHovered, setRemoveIsHovered] = useState<boolean>(false);
-  const units = 0;
+
   const handleAdd = () => {
     if (numOfYears < 6) {
       setNumOfYears(numOfYears + 1);
@@ -55,7 +55,13 @@ const HomeMain = (props: Props) => {
   return (
     <>
       <Stack direction='row' className='w-full'>
-        <HomeSidebar units={units} allCourses={props.allCourses} myCourses={props.myCourses} />
+        <HomeSidebar
+          units={props.myCourses.reduce((total, course) => {
+            return total + course.units;
+          }, 0)}
+          allCourses={props.allCourses}
+          myCourses={props.myCourses}
+        />
         <Stack className='mt-24 w-full items-center justify-center'>
           {/* Classes will be rendered based on numOfClasses */}
           {[...Array(numOfYears)].map((_, index) => (
@@ -88,10 +94,7 @@ const HomeMain = (props: Props) => {
           </Stack>
         </Stack>
       </Stack>
-      <TrashBox 
-        handleAddCourse={handleAddCourse}
-        handleDeleteCourse={handleDeleteCourse}
-      />
+      <TrashBox handleAddCourse={props.handleAddCourse} handleDeleteCourse={props.handleDeleteCourse} myCourses={props.myCourses} />
     </>
   );
 };
