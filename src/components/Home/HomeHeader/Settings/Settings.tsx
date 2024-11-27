@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -13,17 +13,48 @@ import {
 } from '@mui/material';
 
 import AuthService from '@/api/auth/AuthService';
-import { Category, CourseData } from '@/modules/course/types';
+import { Category, CourseData, CreateCourseData, MyCourseData } from '@/modules/course/types';
+
+import { useApi } from '@/api/ApiHandler';
+import UserService from '@/api/user/UserService';
 
 type Props = {
   onClose: () => void;
   allCourses: CourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const Settings = (props: Props) => {
-  const handleClose = () => {
+  // State to keep track of the checked courses
+  const [checkedCourses, setCheckedCourses] = useState<Record<string, boolean>>({});
+  const [initial, setInitial] = useState<Record<string, boolean>>({});
+
+  // Handle the checkbox change
+  const handleCheckboxChange = (courseCode: string) => {
+    setCheckedCourses(prevCheckedCourses => ({
+      ...prevCheckedCourses,
+      [courseCode]: !prevCheckedCourses[courseCode],
+    }));
+  };
+
+  const handleSave = async () => {
+    // Using a for...of loop to handle async calls sequentially
+    for (const [courseCode, isChecked] of Object.entries(checkedCourses)) {
+      if (isChecked) {
+        if (!(courseCode in initial)) {
+          props.handleAddCourse({ code: courseCode, year: 1, quarter: 0 });
+        }
+      }
+      if (!isChecked) {
+        if (courseCode in initial) {
+          props.handleDeleteCourse(courseCode);
+        }
+      }
+    }
     props.onClose();
-    AuthService.logout();
   };
 
   const descriptionElementRef = useRef<HTMLElement>(null);
@@ -33,10 +64,23 @@ const Settings = (props: Props) => {
     }
   }, []);
 
+  // Set the initial checked state based on myCourses prop
+  useEffect(() => {
+    const initialCheckedState: Record<string, boolean> = {};
+
+    props.myCourses
+      .filter(course => course.yearQuarter === 10)
+      .forEach(course => {
+        initialCheckedState[course.code] = true; // Mark courses in myCourses as checked
+      });
+    setCheckedCourses(initialCheckedState);
+    setInitial(initialCheckedState);
+  }, [props.myCourses]);
+
   return (
     <Dialog
       open={true}
-      onClose={handleClose}
+      onClose={() => props.onClose()}
       scroll='paper'
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
@@ -45,93 +89,40 @@ const Settings = (props: Props) => {
     >
       <DialogTitle id='scroll-dialog-title' className='flex justify-between items-center'>
         <span>Settings</span>
-        <Button onClick={handleClose}>Sign Out</Button>
+        <Button onClick={() => AuthService.logout()}>Sign Out</Button>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id='scroll-dialog-description' ref={descriptionElementRef} tabIndex={-1}>
           <Box display='flex' flexDirection='column' gap={4}>
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Lower Divs
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.LOWER_DIV)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
+            {['LOWER_DIV', 'UPPER_DIV', 'MATH', 'PHYSICS', 'GE', 'OTHER'].map(category => (
+              <Box key={category}>
+                <Typography variant='h6' gutterBottom fontWeight='bold'>
+                  {category.replace('_', ' ')}
+                </Typography>
+                <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
+                  {props.allCourses
+                    .filter(course => course.category === Category[category as keyof typeof Category])
+                    .map(course => (
+                      <FormControlLabel
+                        key={course.code}
+                        control={
+                          <Checkbox
+                            checked={checkedCourses[course.code] || false} // Use checked state
+                            onChange={() => handleCheckboxChange(course.code)} // Toggle checked state
+                          />
+                        }
+                        label={course.code}
+                      />
+                    ))}
+                </Box>
               </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Upper Divs
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.UPPER_DIV)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
-              </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Math
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.MATH)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
-              </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Physics
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.PHYSICS)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
-              </Box>
-            </Box>
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                General Education
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.GE)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
-              </Box>
-            </Box>
-
-            <Box>
-              <Typography variant='h6' gutterBottom fontWeight='bold'>
-                Other
-              </Typography>
-              <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
-                {props.allCourses
-                  .filter(course => course.category === Category.OTHER)
-                  .map(course => (
-                    <FormControlLabel key={course.code} control={<Checkbox />} label={course.code} />
-                  ))}
-              </Box>
-            </Box>
+            ))}
           </Box>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Save</Button>
+        <Button onClick={() => props.onClose()}>Cancel</Button>
+        <Button onClick={handleSave}>Save</Button>
       </DialogActions>
     </Dialog>
   );

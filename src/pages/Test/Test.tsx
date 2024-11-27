@@ -18,7 +18,7 @@ const Test = () => {
   const [getSelf] = useApi(() => UserService.getSelf(), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);
   const [getUserById] = useApi(() => UserService.getUserById(2), true, true);
-  const [addCourseToUser] = useApi(() => UserService.addCourseToUser(2, 'CS 180'), true, true);
+  const [addCourseToUser] = useApi(() => UserService.addCourseToUser(4, 'CS 180', 1, 1), true, true);
 
   const [createDegree] = useApi(() => DegreeService.createDegree('Computer Science'), true, true);
   const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees(), true, true);

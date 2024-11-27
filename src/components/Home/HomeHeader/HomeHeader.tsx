@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import Settings from '@/components/Home/HomeHeader/Settings/Settings';
 
 import { AppBar, Grid, Typography, Box } from '@mui/material';
-import { Category, CourseData } from '@/modules/course/types';
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
+import { UserData } from '@/modules/user/types';
 
 type Props = {
   allCourses: CourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const HomeHeader = (props: Props) => {
@@ -14,8 +19,6 @@ const HomeHeader = (props: Props) => {
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   };
-
-  // setLower(props.allCourses?.filter(course => course.category === Category.LOWER_DIV));
 
   return (
     <>
@@ -32,7 +35,16 @@ const HomeHeader = (props: Props) => {
           </div>
         </Grid>
       </AppBar>
-      {showSettings && <Settings onClose={handleShowSettings} allCourses={props.allCourses} />}
+      {showSettings && (
+        <Settings
+          onClose={handleShowSettings}
+          allCourses={props.allCourses}
+          myCourses={props.myCourses}
+          userId={props.userId}
+          handleAddCourse={props.handleAddCourse}
+          handleDeleteCourse={props.handleDeleteCourse}
+        />
+      )}
     </>
   );
 };

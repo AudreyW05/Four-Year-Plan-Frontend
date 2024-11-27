@@ -17,9 +17,25 @@ export type CourseData = {
   has: HasData[];
 };
 
+export type MyCourseData = {
+  code: string;
+  units: number;
+  category: string;
+  yearQuarter: number;
+  missingEnforcedPrereqs: CourseData[];
+  missingWarningPrereqs: CourseData[];
+  prerequisitesFulfilled: boolean;
+};
+
 export type HasData = {
   user: UserData;
   courseCode: string;
   userId: number;
   yearQuarter: number;
+};
+
+export type CreateCourseData = {
+  code: string;
+  year: number;
+  quarter: number;
 };

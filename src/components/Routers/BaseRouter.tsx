@@ -45,8 +45,7 @@ const BaseRouter = () => {
       />
       <Route path={routes.authentication.login} element={<Login />} />
       <Route path={routes.authentication.signup} element={<SignUp />} />
-      <Route path={routes.authentication.forgotPassword} element={<ForgotPassword />}
- />      <Route path={routes.test} element={<Test />} />
+      <Route path={routes.authentication.forgotPassword} element={<ForgotPassword />} /> <Route path={routes.test} element={<Test />} />
       <Route path='*' element={<Navigate to={routes.home} />} />
     </Routes>
   );
