@@ -3,55 +3,42 @@ import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import { Typography, Box, Drawer, List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { Widgets } from '@mui/icons-material';
+import { CourseData } from '@/modules/course/types';
 
 type Props = {
-  key: string
+  key: string;
   sectname: string;
-  class: [string, number][];
-  onRemoveClass: (className: string, sectName: string) => void
+  classes: CourseData[];
 };
 
 const ClassCategories = (props: Props) => {
-const [open, setOpen] = useState(false);
-const [classes, setClasses] = useState(props.class);
-  
+  const [open, setOpen] = useState(false);
 
   function handleOnDrag(e: React.DragEvent, className: string, classUnits: number, sectname: string) {
-    e.dataTransfer.setData("className", className)
-    e.dataTransfer.setData("classUnits", classUnits.toString())
-    e.dataTransfer.setData("fromSidebar", "1")
-    // props.onRemoveClass(className, sectname)//removes from main array
-    // const updatedClasses = classes.filter(([name]) => name !== className);
-    // setClasses(updatedClasses);
+    e.dataTransfer.setData('className', className);
+    e.dataTransfer.setData('classUnits', classUnits.toString());
+    e.dataTransfer.setData('fromSidebar', '1');
   }
 
-  // function handleOnDrop(e:React.DragEvent, className: string, sectname: string){
-   
-    
-  // }
-  
-  
   return (
     <>
       <ListItemButton className='mx-4 my-2' onClick={() => setOpen(!open)}>
-        <ListItemText>{props.sectname}</ListItemText>
+        <ListItemText>{props.sectname.replace('_', ' ')}</ListItemText>
         {open ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
       </ListItemButton>
 
       <Collapse in={open}>
-        <Box className="flex flex-col items-center p-2"
-        >
-          {props.class.map(([courseName, units], index) => (
+        <Box className='flex flex-col items-center p-2'>
+          {props.classes.map(course => (
             <Box
-              key={index}
+              key={course.code}
               draggable
-              onDragStart={(e) => handleOnDrag(e, courseName, units, props.sectname)
-              }
+              onDragStart={e => handleOnDrag(e, course.code, course.units, props.sectname)}
               // onDrop={(e) =>handleOnDrop(e, courseName, props.sectname)}
-              className="bg-bgGray p-4 rounded-lg cursor-pointer my-2 text-center min-h-[50px] outline flex justify-center items-center w-[70%]"
+              className='bg-bgGray p-4 rounded-lg cursor-pointer my-2 text-center min-h-[50px] outline flex justify-center items-center w-[70%]'
             >
-              <Typography variant="body2">
-                {courseName} - {units} units
+              <Typography variant='body2'>
+                {course.code} - {course.units} units
               </Typography>
             </Box>
           ))}
