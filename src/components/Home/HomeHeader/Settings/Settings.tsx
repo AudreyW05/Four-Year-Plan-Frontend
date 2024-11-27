@@ -18,6 +18,8 @@ import { Category, CourseData, CreateCourseData, MyCourseData } from '@/modules/
 import { useApi } from '@/api/ApiHandler';
 import UserService from '@/api/user/UserService';
 
+import { useNavigate } from 'react-router-dom'; // React Router for navigation
+
 type Props = {
   onClose: () => void;
   allCourses: CourseData[];
@@ -28,6 +30,8 @@ type Props = {
 };
 
 const Settings = (props: Props) => {
+  const navigate = useNavigate();
+
   // State to keep track of the checked courses
   const [checkedCourses, setCheckedCourses] = useState<Record<string, boolean>>({});
   const [initial, setInitial] = useState<Record<string, boolean>>({});
@@ -89,7 +93,14 @@ const Settings = (props: Props) => {
     >
       <DialogTitle id='scroll-dialog-title' className='flex justify-between items-center'>
         <span>Settings</span>
-        <Button onClick={() => AuthService.logout()}>Sign Out</Button>
+        <Button
+          onClick={() => {
+            AuthService.logout();
+            navigate('/authentication/login');
+          }}
+        >
+          Sign Out
+        </Button>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id='scroll-dialog-description' ref={descriptionElementRef} tabIndex={-1}>
