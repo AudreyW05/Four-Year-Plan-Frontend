@@ -11,6 +11,7 @@ type Props = {
   userId: number;
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
+  email: string;
 };
 
 const HomeHeader = (props: Props) => {
@@ -19,6 +20,12 @@ const HomeHeader = (props: Props) => {
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   };
+
+  const profileName = props.currentUser.email ? props.currentUser.email.substring(0, props.currentUser.email.lastIndexOf('@')) : '?';
+  const initials =
+    profileName.lastIndexOf('.') === -1
+      ? profileName.charAt(0).toUpperCase()
+      : (profileName.charAt(0) + profileName.charAt(profileName.lastIndexOf('.') + 1)).toUpperCase();
 
   return (
     <>
@@ -30,7 +37,7 @@ const HomeHeader = (props: Props) => {
               className='flex bg-uclaBlue text-white rounded-full justify-center items-center w-12 h-12 cursor-pointer mr-10 float-right'
               onClick={handleShowSettings}
             >
-              <p className='font-Inter'>AW</p> {/* Placeholder initials */}
+              <p className='font-Inter'>{initials}</p>
             </Box>
           </div>
         </Grid>

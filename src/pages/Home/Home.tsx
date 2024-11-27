@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useApi } from '@/api/ApiHandler';
 import { retrieveAllData } from '@/utils/api';
 
-import { getCurrentUser, updateCurrentUser } from '@/modules/user/userSlice';
+import { getCurrentUser } from '@/modules/user/userSlice';
 import { toggleShowNotification } from '@/modules/ui/uiSlice';
 import { severity } from '@/constants/constants';
 
@@ -73,6 +73,7 @@ const Home = () => {
         userId={userId}
         handleAddCourse={handleAddCourse}
         handleDeleteCourse={handleDeleteCourse}
+        email={currentUser?.email ?? ''}
       />
       <main>
         <HomeMain />
