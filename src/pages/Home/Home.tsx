@@ -61,6 +61,14 @@ const Home = () => {
     dispatch(toggleShowNotification({ message: 'Done', severity: severity.SUCCESS }));
   };
 
+  const handleMoveCourse = async (data: CreateCourseData) => {
+    dispatch(toggleShowNotification({ message: 'Loading...', severity: severity.LOADING }));
+    await deleteCourseFromUser(data.code);
+    await addCourseToUser(data);
+    await fetchAllData();
+    dispatch(toggleShowNotification({ message: 'Done', severity: severity.SUCCESS }));
+  }
+
   useEffect(() => {
     fetchAllData();
   }, []);
@@ -82,6 +90,7 @@ const Home = () => {
           userId={userId}
           handleAddCourse={handleAddCourse}
           handleDeleteCourse={handleDeleteCourse}
+          handleMoveCourse={handleMoveCourse}
         />
       </main>
     </>

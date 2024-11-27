@@ -14,6 +14,7 @@ type Props = {
   userId: number;
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
+  handleMoveCourse: (data: CreateCourseData) => void;
 };
 
 const YearBox = (props: Props) => {
@@ -67,10 +68,11 @@ const YearBox = (props: Props) => {
             key={quarter}
             year={props.year}
             quarter={quarter}
-            myCourses={props.myCourses}
+            myCourses={props.myCourses.filter(course => Math.floor(course.yearQuarter / 10) === Number(props.year))} // filter by year
             userId={props.userId}
             handleAddCourse={props.handleAddCourse}
             handleDeleteCourse={props.handleDeleteCourse}
+            handleMoveCourse={props.handleMoveCourse}
           />
         ))}
         <Box onClick={() => handleClick()} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>

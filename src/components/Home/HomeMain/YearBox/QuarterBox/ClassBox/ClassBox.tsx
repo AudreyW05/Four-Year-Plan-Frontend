@@ -2,36 +2,45 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Paper, Typography, Box, Button, TextField } from '@mui/material';
 import { CourseData, CreateCourseData, MyCourseData } from '@/modules/course/types';
 
+import { useDispatch, UseDispatch } from 'react-redux';
+import { toggleShowNotification } from '@/modules/ui/uiSlice';
+import { severity } from '@/constants/constants';
+
 type Props = {
   year: string;
   quarter: string; // Name of the quarter
-  myCourses: MyCourseData[];
+  quarterNum: number; // Number of quarter
+  myCourses: MyCourseData[]; // filtered by year and quarter
   userId: number;
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
+  handleMoveCourse: (data: CreateCourseData) => void;
 };
 
 const ClassBox = (props: Props) => {
+  const dispatch = useDispatch();
+
   function handleOnDrop(e: React.DragEvent) {
     console.log('on drop');
-    const year = e.dataTransfer.getData('year') as string;
-    const quarterString = e.dataTransfer.getData('quarter') as string;
-    const code = e.dataTransfer.getData('className') as string;
-    const units = e.dataTransfer.getData('classUnits') as string;
+    const code = e.dataTransfer.getData('code') as string;
     const fromSidebar = e.dataTransfer.getData('fromSidebar') as string;
-    let quarter: number;
 
-    // let courseData: CreateCourseData;
-    //   if (fromSidebar === "1") { // from
-    //      courseData = {
-    //       code: code,
-    //       year: Number(year),
-    //       quarter:
-    //     }
-    //   }
-    //   else {
-
-    //   }
+    const courseData: CreateCourseData = {
+      code: code,
+      year: Number(props.year),
+      quarter: props.quarterNum,
+    }
+    if (props.myCourses.length < 5) {
+      if (fromSidebar === '1') {
+        props.handleAddCourse(courseData);
+      }
+      else {
+        props.handleMoveCourse(courseData); // remove old course from old quarter
+      }
+    }
+    else{
+      dispatch(toggleShowNotification({ message: 'Cannot add more than five classes', severity: severity.ERROR }));
+    }
   }
 
   function handleDragOver(e: React.DragEvent) {
@@ -41,10 +50,9 @@ const ClassBox = (props: Props) => {
 
   function handleOnDrag(e: React.DragEvent, course: MyCourseData) {
     console.log('on drag');
-    e.dataTransfer.setData('course', course.code);
-    e.dataTransfer.setData('classUnits', course.units.toString());
-    e.dataTransfer.setData('year', props.year);
-    e.dataTransfer.setData('quarter', props.quarter);
+    e.dataTransfer.setData('code', course.code);
+    e.dataTransfer.setData('units', course.units.toString());
+    e.dataTransfer.setData('fromSidebar', '0');
   }
 
   return (
@@ -56,13 +64,13 @@ const ClassBox = (props: Props) => {
             <Grid className='justify-items-stretch' item xs={6} md={6} sm={6} key={index}>
               {index < props.myCourses.length ? (
                 <Paper
-                  className='font-Inter bg-bgGray text-textGray py-4 h-50px w-100px min-w-[90px] whitespace-nowrap'
+                  className='font-Inter bg-bgGray text-textGray py-4 h-50px w-100px min-w-[90px] whitespace-wrap'
                   elevation={2}
                   draggable
                   onDragStart={e => handleOnDrag(e, props.myCourses[index])}
                 >
                   <Typography className='text-center fontsize-10px font-Inter bg-bgGray text-textGray' variant='body2'>
-                    {/* {props.classes[props.year][props.quarter][index]} */}
+                    {props.myCourses[index].code}
                   </Typography>
                 </Paper>
               ) : (
