@@ -60,11 +60,15 @@ const ClassBox = (props: Props) => {
 
   function handleOnDrop(e: React.DragEvent) {
     console.log("on drop")
+    
     const year = e.dataTransfer.getData("year") as string;
     const quarter = e.dataTransfer.getData("quarter") as string;
     const className = e.dataTransfer.getData("className") as string;
     const classUnits = e.dataTransfer.getData("classUnits") as string;
     const fromSidebar = e.dataTransfer.getData("fromSidebar") as string;
+    console.log("sidebar?", fromSidebar)
+    
+
     if (year !== props.year || quarter !== props.quarter) { // if different year/quarter
       addClass(className, classUnits);
     }

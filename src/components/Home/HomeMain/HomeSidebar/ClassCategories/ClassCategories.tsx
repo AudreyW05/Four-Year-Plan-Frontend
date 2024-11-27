@@ -18,8 +18,14 @@ const ClassCategories = (props: Props) => {
     e.dataTransfer.setData('className', className);
     e.dataTransfer.setData('classUnits', classUnits.toString());
     e.dataTransfer.setData('fromSidebar', '1');
+    e.dataTransfer.setData("className", className)
+    e.dataTransfer.setData("classUnits", classUnits.toString())
+    e.dataTransfer.setData("fromSidebar", "1")
   }
 
+
+  
+  
   return (
     <>
       <ListItemButton className='mx-4 my-2' onClick={() => setOpen(!open)}>
