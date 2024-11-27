@@ -21,7 +21,7 @@ const HomeHeader = (props: Props) => {
     setShowSettings(!showSettings);
   };
 
-  const profileName = props.currentUser.email ? props.currentUser.email.substring(0, props.currentUser.email.lastIndexOf('@')) : '?';
+  const profileName = props.email ? props.email.substring(0, props.email.lastIndexOf('@')) : '?';
   const initials =
     profileName.lastIndexOf('.') === -1
       ? profileName.charAt(0).toUpperCase()
