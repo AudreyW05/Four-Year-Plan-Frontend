@@ -1,12 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ClassCategories from './ClassCategories/ClassCategories';
 import { Box, Drawer, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import UnitBar from './UnitBar/UnitBar';
+import { CourseData, MyCourseData, Category } from '@/modules/course/types';
 
-const HomeSidebar = () => {
+type Props = {
+  units: { [year: string]: { [quarter: string]: number[] } };
+  allCourses: CourseData[];
+  myCourses: MyCourseData[];
+};
+
+const HomeSidebar = (props: Props) => {
   const [open, setOpen] = useState(false);
+  const [totalSum, setTotalSum] = useState<number>(0);
+
+  const sumUnits = (units: { [year: string]: { [quarter: string]: number[] } }) => {
+    let totalUnits = 0;
+    // Iterate over years
+    for (const year in units) {
+      // Iterate over quarters
+      for (const quarter in units[year]) {
+        // Sum up the values in the number[] array for the current quarter
+        totalUnits += units[year][quarter].reduce((acc, value) => acc + value, 0);
+      }
+    }
+
+    return totalUnits;
+  };
+
+  useEffect(() => {
+    const sum = sumUnits(props.units);
+    setTotalSum(sum);
+  }, [props.units]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -50,15 +77,18 @@ const HomeSidebar = () => {
             </IconButton>
           </Box>
           <Box flexGrow={1} overflow={'auto'}>
-            <ClassCategories sectname={'Lower Division'}></ClassCategories>
-            <ClassCategories sectname={'Upper Division'}></ClassCategories>
-            <ClassCategories sectname={'Math'}></ClassCategories>
-            <ClassCategories sectname={'Physics'}></ClassCategories>
-            <ClassCategories sectname={'GEs'}></ClassCategories>
-            <ClassCategories sectname={'Others'}></ClassCategories>
+            {['LOWER_DIV', 'UPPER_DIV', 'MATH', 'PHYSICS', 'GE', 'OTHER'].map(category => (
+              <ClassCategories
+                key={category}
+                sectname={category}
+                classes={props.allCourses
+                  .filter(allCourses => !props.myCourses.some(course => allCourses.code === course.code))
+                  .filter(course => course.category === Category[category as keyof typeof Category])}
+              />
+            ))}
           </Box>
           <Box mt={1}>
-            <UnitBar value={50}></UnitBar>
+            <UnitBar value={totalSum}></UnitBar>
           </Box>
         </Box>
       </Drawer>

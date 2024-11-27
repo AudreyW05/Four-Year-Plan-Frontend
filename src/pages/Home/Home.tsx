@@ -76,7 +76,7 @@ const Home = () => {
         email={currentUser?.email ?? ''}
       />
       <main>
-        <HomeMain />
+        <HomeMain allCourses={allCourses} myCourses={myCourses} />
       </main>
     </>
   );
