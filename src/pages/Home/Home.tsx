@@ -76,7 +76,7 @@ const Home = () => {
         email={currentUser?.email ?? ''}
       />
       <main>
-        <HomeMain allCourses={allCourses} myCourses={myCourses} />
+        <HomeMain allCourses={allCourses} myCourses={myCourses} handleAddCourse={handleAddCourse} handleDeleteCourse={handleDeleteCourse} />
       </main>
     </>
   );

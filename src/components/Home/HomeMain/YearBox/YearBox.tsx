@@ -6,13 +6,13 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
   year: string;
-  classes: { [year: string]: { [quarter: string]: string[] } };
-  units: { [year: string]: { [quarter: string]: number[] } };
-  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
-  setUnits: React.Dispatch<React.SetStateAction< { [year: string]: { [quarter: string]: number[] } } >>;
+  courses: MyCourseData[];
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const YearBox = (props: Props) => {
@@ -31,33 +31,15 @@ const YearBox = (props: Props) => {
     }
   };
 
-  const removeQuarter = () => {
-    // Clear classes for the "Summer Quarter"
-    props.setClasses((prevClasses) => ({
-      ...prevClasses,
-      [props.year]: {
-        ...prevClasses[props.year],
-        'Summer Quarter': [], // Reset classes for Summer Quarter
-      },
-    }));
+  // const removeQuarter = () => {};
 
-    // Clear units for the "Summer Quarter"
-    props.setUnits((prevUnits) => ({
-      ...prevUnits,
-      [props.year]: {
-        ...prevUnits[props.year],
-        'Summer Quarter': [0, 0, 0, 0], // Reset units for Summer Quarter
-      },
-    }));
-  };
-  
   const handleClick = () => {
     if (showSummer) {
-      removeQuarter();
+      // removeQuarter();
     }
     toggleSummer();
     setIsHovered(false);
-  }
+  };
 
   return (
     <Box className='font-Inter bg-bgGray text-textGray justify-center w-fit p-2 rounded-lg shadow-sm mx-4 my-2'>
@@ -69,21 +51,16 @@ const YearBox = (props: Props) => {
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center gap-1 justify-between w-full'>
         {quarters.map((quarter, index) => (
-          <QuarterBox 
+          <QuarterBox
             key={index}
             quarter={quarter}
             year={props.year}
-            classes={props.classes}
-            units={props.units}
-            setClasses={props.setClasses}
-            setUnits={props.setUnits}
+            courses={props.courses.filter(course => course.yearQuarter % 10 == index + 1)}
+            handleAddCourse={props.handleAddCourse}
+            handleDeleteCourse={props.handleDeleteCourse}
           />
         ))}
-        <Box
-          onClick={() => handleClick()}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
+        <Box onClick={() => handleClick()} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
           {!isHovered ? (
             showSummer ? (
               <RemoveCircleOutlineIcon className='text-textGray' />
@@ -102,4 +79,3 @@ const YearBox = (props: Props) => {
 };
 
 export default YearBox;
-
