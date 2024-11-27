@@ -5,18 +5,30 @@ import { Typography, Box, Drawer, List, ListItemButton, ListItemText, Collapse }
 import { Widgets } from '@mui/icons-material';
 
 type Props = {
+  key: string
   sectname: string;
+  class: [string, number][];
+  onRemoveClass: (className: string, sectName: string) => void
 };
 
 const ClassCategories = (props: Props) => {
-  const [open, setOpen] = useState(false);
+const [open, setOpen] = useState(false);
+const [classes, setClasses] = useState(props.class);
   
 
-  function handleOnDrag(e: React.DragEvent, className: string, classUnits: number) {
+  function handleOnDrag(e: React.DragEvent, className: string, classUnits: number, sectname: string) {
     e.dataTransfer.setData("className", className)
     e.dataTransfer.setData("classUnits", classUnits.toString())
     e.dataTransfer.setData("fromSidebar", "1")
+    // props.onRemoveClass(className, sectname)//removes from main array
+    // const updatedClasses = classes.filter(([name]) => name !== className);
+    // setClasses(updatedClasses);
   }
+
+  // function handleOnDrop(e:React.DragEvent, className: string, sectname: string){
+   
+    
+  // }
   
   
   return (
@@ -25,42 +37,25 @@ const ClassCategories = (props: Props) => {
         <ListItemText>{props.sectname}</ListItemText>
         {open ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
       </ListItemButton>
-      <Collapse in={open}>
-        {/* <Box
-        className='bg-bgGray'
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        border='1px dashed #404040'
-        borderRadius={2}
-        width='100'
-        padding={2}
-        gap={2}
-        onDrop={handleOnDrop}
-        onDragOver={(e) => e.preventDefault()} // Allow drop by preventing the default behavior
-      > */}
-     <Box
-        draggable
-        gap={10}
-        width="90%"
-        maxHeight="100px"
-        onDragStart={(e) => handleOnDrag(e, "cs31", 4)}
-        className="bg-uclaBlue text-bgWhite p-4 rounded-lg cursor-pointer my-2 align-content: center text-center min-h-[50px]"
-      >
-        <Typography variant='body2'>CS31</Typography>
-      </Box>
-      <Box
-        draggable
-        gap={10}
-        maxHeight="100px"
-        width="90%"
-        onDragStart={(e) => handleOnDrag(e, "cs32", 3)}
-        className="bg-uclaBlue text-bgWhite p-4 rounded-lg cursor-pointer text-center min-h-[50px]"
-      >
-        <Typography variant='body2'>CS32</Typography>
-      </Box>
 
-      {/* </Box> */}
+      <Collapse in={open}>
+        <Box className="flex flex-col items-center p-2"
+        >
+          {props.class.map(([courseName, units], index) => (
+            <Box
+              key={index}
+              draggable
+              onDragStart={(e) => handleOnDrag(e, courseName, units, props.sectname)
+              }
+              // onDrop={(e) =>handleOnDrop(e, courseName, props.sectname)}
+              className="bg-bgGray p-4 rounded-lg cursor-pointer my-2 text-center min-h-[50px] outline flex justify-center items-center w-[70%]"
+            >
+              <Typography variant="body2">
+                {courseName} - {units} units
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </Collapse>
     </>
   );
