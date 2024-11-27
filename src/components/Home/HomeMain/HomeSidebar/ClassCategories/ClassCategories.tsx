@@ -14,13 +14,10 @@ type Props = {
 const ClassCategories = (props: Props) => {
   const [open, setOpen] = useState(false);
 
-  function handleOnDrag(e: React.DragEvent, className: string, classUnits: number, sectname: string) {
-    e.dataTransfer.setData('className', className);
-    e.dataTransfer.setData('classUnits', classUnits.toString());
+  function handleOnDrag(e: React.DragEvent, code: string, units: number, sectname: string) {
+    e.dataTransfer.setData('code', code);
+    e.dataTransfer.setData('units', units.toString());
     e.dataTransfer.setData('fromSidebar', '1');
-    e.dataTransfer.setData("className", className)
-    e.dataTransfer.setData("classUnits", classUnits.toString())
-    e.dataTransfer.setData("fromSidebar", "1")
   }
 
 

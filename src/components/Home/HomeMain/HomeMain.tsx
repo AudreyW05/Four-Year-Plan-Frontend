@@ -16,6 +16,7 @@ type Props = {
   myCourses: MyCourseData[];
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
+  handleMoveCourse: (data: CreateCourseData) => void;
 };
 
 const HomeMain = (props: Props) => {
@@ -72,6 +73,7 @@ const HomeMain = (props: Props) => {
             userId={props.userId}
             handleAddCourse={props.handleAddCourse}
             handleDeleteCourse={props.handleDeleteCourse}
+            handleMoveCourse={props.handleMoveCourse}
             />
           ))}
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>

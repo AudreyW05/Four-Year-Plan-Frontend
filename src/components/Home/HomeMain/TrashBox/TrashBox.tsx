@@ -16,9 +16,9 @@ const TrashBox = (props: Props) => {
 
   function handleOnDrop(e: React.DragEvent) {
     e.preventDefault();
-    if (!props.myCourses.some(course => course.code === (e.dataTransfer.getData('className') as string))) {
-      const className = e.dataTransfer.getData('className') as string;
-      props.handleDeleteCourse(className);
+    if (props.myCourses.some(course => course.code === (e.dataTransfer.getData('code') as string))) {
+      const code = e.dataTransfer.getData('code') as string;
+      props.handleDeleteCourse(code);
     }
     console.log('removed class');
     setIsDraggingOver(false);
