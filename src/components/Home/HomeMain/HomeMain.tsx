@@ -11,6 +11,7 @@ import { TornadoSharp } from '@mui/icons-material';
 import { CourseData, CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
+  userId: number;
   allCourses: CourseData[];
   myCourses: MyCourseData[];
   handleAddCourse: (data: CreateCourseData) => void;
@@ -30,14 +31,26 @@ const HomeMain = (props: Props) => {
   };
 
   const handleRemove = () => {
-    // removeYear(String(numOfYears));
+    removeYear(numOfYears);
     if (numOfYears > 1) {
       setNumOfYears(numOfYears - 1);
     }
     setRemoveIsHovered(false);
   };
 
-  // const removeYear = (year: string) => {};
+  const removeYear = (year: number) => {
+    // go through myCourses, check to see if myCourses.yearQuarter's first digit === Number(year)
+    // if true, call handleDeleteCourse using that myCourses element's course code (myCourses.code)
+    props.myCourses.forEach(course => {
+      const courseYear = Math.floor(course.yearQuarter / 10); // two digit, floor 10 gets year
+
+      // delete course from myCourses
+      if (courseYear === year) {
+        props.handleDeleteCourse(course.code);
+      }
+    });
+      
+  };
 
   return (
     <>
@@ -52,12 +65,13 @@ const HomeMain = (props: Props) => {
         <Stack className='mt-24 w-full items-center justify-center'>
           {/* Classes will be rendered based on numOfClasses */}
           {[...Array(numOfYears)].map((_, index) => (
-            <YearBox
-              key={index}
-              handleAddCourse={props.handleAddCourse}
-              handleDeleteCourse={props.handleDeleteCourse}
-              year={(index + 1).toString()}
-              courses={props.myCourses.filter(course => course.yearQuarter / 10 == index)} // Pass the global classes state
+            <YearBox 
+            key={index} 
+            year={(index + 1).toString()}
+            myCourses={props.myCourses}
+            userId={props.userId}
+            handleAddCourse={props.handleAddCourse}
+            handleDeleteCourse={props.handleDeleteCourse}
             />
           ))}
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>

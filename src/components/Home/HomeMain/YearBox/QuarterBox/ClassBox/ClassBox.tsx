@@ -5,22 +5,35 @@ import { CourseData, CreateCourseData, MyCourseData } from '@/modules/course/typ
 type Props = {
   year: string;
   quarter: string; // Name of the quarter
-  courses: MyCourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
 };
 
 const ClassBox = (props: Props) => {
   function handleOnDrop(e: React.DragEvent) {
-    const year = e.dataTransfer.getData('year') as string;
-    const quarter = e.dataTransfer.getData('quarter') as string;
-    const className = e.dataTransfer.getData('className') as string;
-    const classUnits = e.dataTransfer.getData('classUnits') as string;
-
-    console.log(e.dataTransfer);
-    if (year !== props.year || quarter !== props.quarter) {
-      // if different year/quarter
+    console.log("on drop")
+    const year = e.dataTransfer.getData("year") as string;
+    const quarterString = e.dataTransfer.getData("quarter") as string;
+    const code = e.dataTransfer.getData("className") as string;
+    const units = e.dataTransfer.getData("classUnits") as string;
+    const fromSidebar = e.dataTransfer.getData("fromSidebar") as string;
+    let quarter: number;
+    
+    let courseData: CreateCourseData;
+    if (fromSidebar === "1") { // from
+       courseData = {
+        code: code,
+        year: Number(year),
+        quarter:
+      }
     }
+    else {
+
+    }
+   
+
   }
 
   function handleDragOver(e: React.DragEvent) {

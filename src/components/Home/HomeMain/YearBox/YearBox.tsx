@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import QuarterBox from '@components/Home/HomeMain/YearBox/QuarterBox/QuarterBox';
 import { Box, Typography } from '@mui/material';
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -10,7 +11,8 @@ import { CreateCourseData, MyCourseData } from '@/modules/course/types';
 
 type Props = {
   year: string;
-  courses: MyCourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
 };
@@ -31,11 +33,21 @@ const YearBox = (props: Props) => {
     }
   };
 
-  // const removeQuarter = () => {};
+  const removeQuarter = (year: string) => {
+    // similar to removeYear in HomeMain.tsx, but removing a specific year's summer quarter
+    props.myCourses.forEach(course => {
+      const courseYear = Math.floor(course.yearQuarter / 10);
+      const courseQuarter = course.yearQuarter % 10; // if 4, summer quarter
 
+      if (courseYear === Number(year) && courseQuarter === 4) { // if course is in year's summer quarter, remove
+        props.handleDeleteCourse(course.code);
+      }
+    })
+  };
+  
   const handleClick = () => {
     if (showSummer) {
-      // removeQuarter();
+      removeQuarter(props.year);
     }
     toggleSummer();
     setIsHovered(false);
@@ -50,12 +62,12 @@ const YearBox = (props: Props) => {
 
       {/* QuarterBoxes will flex here */}
       <Box className='bg-bgGray text-textGray flex flex-row items-center gap-1 justify-between w-full'>
-        {quarters.map((quarter, index) => (
-          <QuarterBox
-            key={index}
-            quarter={quarter}
+        {quarters.map((quarter, _) => (
+          <QuarterBox 
             year={props.year}
-            courses={props.courses.filter(course => course.yearQuarter % 10 == index + 1)}
+            quarter={quarter}
+            myCourses={props.myCourses}
+            userId={props.userId}
             handleAddCourse={props.handleAddCourse}
             handleDeleteCourse={props.handleDeleteCourse}
           />
