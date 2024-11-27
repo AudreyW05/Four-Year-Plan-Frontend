@@ -2,21 +2,26 @@ import React, { useState } from 'react';
 import Settings from '@/components/Home/HomeHeader/Settings/Settings';
 
 import { AppBar, Grid, Typography, Box } from '@mui/material';
-
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 import { UserData } from '@/modules/user/types';
 
-export type Props = {
-  currentUser: UserData;
+type Props = {
+  allCourses: CourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
+  email: string;
 };
 
-const HomeHeader = ({ currentUser }: Props) => {
+const HomeHeader = (props: Props) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   };
 
-  const profileName = currentUser.email ? currentUser.email.substring(0, currentUser.email.lastIndexOf('@')) : '?';
+  const profileName = props.currentUser.email ? props.currentUser.email.substring(0, props.currentUser.email.lastIndexOf('@')) : '?';
   const initials =
     profileName.lastIndexOf('.') === -1
       ? profileName.charAt(0).toUpperCase()
@@ -37,7 +42,16 @@ const HomeHeader = ({ currentUser }: Props) => {
           </div>
         </Grid>
       </AppBar>
-      {showSettings && <Settings onClose={handleShowSettings} />}
+      {showSettings && (
+        <Settings
+          onClose={handleShowSettings}
+          allCourses={props.allCourses}
+          myCourses={props.myCourses}
+          userId={props.userId}
+          handleAddCourse={props.handleAddCourse}
+          handleDeleteCourse={props.handleDeleteCourse}
+        />
+      )}
     </>
   );
 };

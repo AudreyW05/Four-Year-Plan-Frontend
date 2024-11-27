@@ -52,12 +52,33 @@ class UserService {
     }
   }
 
-  public static async addCourseToUser(id: number, courseCode: string): Promise<ApiData> {
+  public static async addCourseToUser(id: number, courseCode: string, year: number, quarter: number): Promise<ApiData> {
     try {
       const response = await ApiService.request(
         {
           url: `${this.getUserUrl()}/${id}/add-course`,
           method: 'POST',
+          data: {
+            courseCode,
+            year,
+            quarter,
+          },
+        },
+        true,
+      );
+
+      return response;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public static async deleteCourseFromUser(id: number, courseCode: string): Promise<ApiData> {
+    try {
+      const response = await ApiService.request(
+        {
+          url: `${this.getUserUrl()}/${id}/delete-course`,
+          method: 'DELETE',
           data: {
             courseCode,
           },
