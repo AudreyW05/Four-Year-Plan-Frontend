@@ -4,38 +4,19 @@ import { Box, Drawer, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import UnitBar from './UnitBar/UnitBar';
-import { Category } from '@mui/icons-material';
+import { CourseData, MyCourseData, Category } from '@/modules/course/types';
 
 type Props = {
   units: { [year: string]: { [quarter: string]: number[] } };
-}
+  allCourses: CourseData[];
+  myCourses: MyCourseData[];
+};
 
 const HomeSidebar = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [totalSum, setTotalSum] = useState<number>(0);
-  
 
-
-  const [classData, setClassData] = useState<{ 
-    [sectname: string]: [string, number][]
-  }> ({
-  "Lower Division": [ ["CS31", 3], ["CS32", 4] ],
-  "Upper Division": [ ["CS180", 4], ["CS111", 3] ],
-  "Math": [ ["Math33A", 3], ["Math33B", 3] ],
-  "Physics": [ ["Physics1A", 3], ["Physics1B", 3] ],
-  "GEs": [ ["Anthro1", 3], ["Sociology1", 3] ],
-  "Others": [ ["Audrey Wong from Beijing China", 0], ["Music1", 3] ]
-  });
-
-  const removeClass = (className: string, sectName: string) => {
-    const updatedClassData = {...classData};
-
-    updatedClassData[sectName] = updatedClassData[sectName].filter(([classNameInCategory, units]) => classNameInCategory !== className)
-
-    setClassData(updatedClassData);
-  };
-
-  const sumUnits = ( units: { [year: string]: { [quarter: string]: number[] } }) => {
+  const sumUnits = (units: { [year: string]: { [quarter: string]: number[] } }) => {
     let totalUnits = 0;
     // Iterate over years
     for (const year in units) {
@@ -45,14 +26,14 @@ const HomeSidebar = (props: Props) => {
         totalUnits += units[year][quarter].reduce((acc, value) => acc + value, 0);
       }
     }
-  
+
     return totalUnits;
   };
 
   useEffect(() => {
     const sum = sumUnits(props.units);
     setTotalSum(sum);
-  }, [props.units]); 
+  }, [props.units]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -63,7 +44,6 @@ const HomeSidebar = (props: Props) => {
   };
 
   return (
-    
     <Box className={`mt-24 ${open ? 'ml-64' : 'ml-2 pr-10'}`} overflow={'auto'}>
       {!open && (
         <IconButton
@@ -90,7 +70,6 @@ const HomeSidebar = (props: Props) => {
           },
         }}
       >
-
         <Box className='flex-col w-64' display={'flex'} flexDirection={'column'} height={'88%'}>
           <Box className='flex items-center px-2 my-4 justify-end' overflow={'auto'}>
             <IconButton onClick={handleDrawerClose} disableRipple disableTouchRipple>
@@ -98,12 +77,15 @@ const HomeSidebar = (props: Props) => {
             </IconButton>
           </Box>
           <Box flexGrow={1} overflow={'auto'}>
-          {Object.entries(classData).map(([category, allclass]) => (<ClassCategories 
-          key={category} 
-          sectname={category} 
-          class={allclass} 
-          onRemoveClass= {removeClass}
-          />))}
+            {['LOWER_DIV', 'UPPER_DIV', 'MATH', 'PHYSICS', 'GE', 'OTHER'].map(category => (
+              <ClassCategories
+                key={category}
+                sectname={category}
+                classes={props.allCourses
+                  .filter(allCourses => !props.myCourses.some(course => allCourses.code === course.code))
+                  .filter(course => course.category === Category[category as keyof typeof Category])}
+              />
+            ))}
           </Box>
           <Box mt={1}>
             <UnitBar value={totalSum}></UnitBar>
