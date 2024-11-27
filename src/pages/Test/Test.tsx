@@ -9,19 +9,22 @@ import { Button, Stack, Typography } from '@mui/material';
 import { ApiData } from '@/api/ApiService';
 import { isSuccess } from '@/api/ApiHandler';
 
+import { Categories, Category } from '@/modules/course/types';
+
 const Test = () => {
   const [login] = useApi(() => AuthService.login('audreywong1@gmail.com', 'abc12345!!'), true, true);
+  const [register] = useApi(() => AuthService.register('audreywong1@gmail.com', 'abc12345!!'), true, true);
 
   const [getSelf] = useApi(() => UserService.getSelf(), true, true);
   const [getAllUsers] = useApi(() => UserService.getAllUsers(), true, true);
   const [getUserById] = useApi(() => UserService.getUserById(2), true, true);
-  const [addCourseToUser] = useApi(() => UserService.addCourseToUser(2, 'CS 180'), true, true);
+  const [addCourseToUser] = useApi(() => UserService.addCourseToUser(4, 'CS 180', 1, 1), true, true);
 
   const [createDegree] = useApi(() => DegreeService.createDegree('Computer Science'), true, true);
   const [getAllDegrees] = useApi(() => DegreeService.getAllDegrees(), true, true);
   const [getDegreeByName] = useApi(() => DegreeService.getDegreeByName('Computer Science'), true, true);
 
-  const [createCourse] = useApi(() => CourseService.createCourse('CS 180', 4), true, true);
+  const [createCourse] = useApi(() => CourseService.createCourse('CS 180', 4, Category.UPPER_DIV), true, true);
   const [getAllCourses] = useApi(() => CourseService.getAllCourses(), true, true);
   const [getCourseByCode] = useApi(() => CourseService.getCourseByCode('CS 180'), true, true);
 
@@ -47,6 +50,9 @@ const Test = () => {
             </Button>
             <Button variant='contained' onClick={() => AuthService.logout()}>
               Sign Out
+            </Button>
+            <Button variant='contained' onClick={() => handleButtonClick(register)}>
+              Register
             </Button>
           </Stack>
           <Typography variant='h5'>User</Typography>
@@ -84,7 +90,7 @@ const Test = () => {
             <Button variant='contained' onClick={() => handleButtonClick(getAllCourses)}>
               Get All Courses
             </Button>
-            <Button variant='contained' onClick={() => handleButtonClick(getDegreeByName)}>
+            <Button variant='contained' onClick={() => handleButtonClick(getCourseByCode)}>
               Get Course By Code
             </Button>
           </Stack>

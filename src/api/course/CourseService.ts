@@ -1,11 +1,13 @@
 import ApiService, { ApiData } from '@/api/ApiService';
 
+import { Categories } from '@/modules/course/types';
+
 class CourseService {
   private static GetCourseUrl() {
     return 'courses';
   }
 
-  public static async createCourse(code: string, credits: number): Promise<ApiData> {
+  public static async createCourse(code: string, units: number, category: Categories): Promise<ApiData> {
     try {
       const response = await ApiService.request(
         {
@@ -13,7 +15,8 @@ class CourseService {
           method: 'POST',
           data: {
             code,
-            credits,
+            units,
+            category,
           },
         },
         true,

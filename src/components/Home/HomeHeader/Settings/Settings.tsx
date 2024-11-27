@@ -1,18 +1,64 @@
-import React, { useEffect, useRef } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, FormControlLabel, Checkbox } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  FormControlLabel,
+  Checkbox,
+  Box,
+  Typography,
+} from '@mui/material';
 
 import AuthService from '@/api/auth/AuthService';
+import { Category, CourseData, CreateCourseData, MyCourseData } from '@/modules/course/types';
+
+import { useApi } from '@/api/ApiHandler';
+import UserService from '@/api/user/UserService';
+
+import { useNavigate } from 'react-router-dom'; // React Router for navigation
 
 type Props = {
   onClose: () => void;
+  allCourses: CourseData[];
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const Settings = (props: Props) => {
-  const scroll = 'paper';
+  const navigate = useNavigate();
 
-  const handleClose = () => {
+  // State to keep track of the checked courses
+  const [checkedCourses, setCheckedCourses] = useState<Record<string, boolean>>({});
+  const [initial, setInitial] = useState<Record<string, boolean>>({});
+
+  // Handle the checkbox change
+  const handleCheckboxChange = (courseCode: string) => {
+    setCheckedCourses(prevCheckedCourses => ({
+      ...prevCheckedCourses,
+      [courseCode]: !prevCheckedCourses[courseCode],
+    }));
+  };
+
+  const handleSave = async () => {
+    // Using a for...of loop to handle async calls sequentially
+    for (const [courseCode, isChecked] of Object.entries(checkedCourses)) {
+      if (isChecked) {
+        if (!(courseCode in initial)) {
+          props.handleAddCourse({ code: courseCode, year: 1, quarter: 0 });
+        }
+      }
+      if (!isChecked) {
+        if (courseCode in initial) {
+          props.handleDeleteCourse(courseCode);
+        }
+      }
+    }
     props.onClose();
-    AuthService.logout();
   };
 
   const descriptionElementRef = useRef<HTMLElement>(null);
@@ -22,124 +68,72 @@ const Settings = (props: Props) => {
     }
   }, []);
 
+  // Set the initial checked state based on myCourses prop
+  useEffect(() => {
+    const initialCheckedState: Record<string, boolean> = {};
+
+    props.myCourses
+      .filter(course => course.yearQuarter === 10)
+      .forEach(course => {
+        initialCheckedState[course.code] = true; // Mark courses in myCourses as checked
+      });
+    setCheckedCourses(initialCheckedState);
+    setInitial(initialCheckedState);
+  }, [props.myCourses]);
+
   return (
     <Dialog
       open={true}
-      onClose={handleClose}
-      scroll={scroll}
+      onClose={() => props.onClose()}
+      scroll='paper'
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
       maxWidth='md'
-      fullWidth={true}
+      fullWidth
     >
       <DialogTitle id='scroll-dialog-title' className='flex justify-between items-center'>
         <span>Settings</span>
-        <Button onClick={handleClose}>Sign Out</Button>
+        <Button
+          onClick={() => {
+            AuthService.logout();
+            navigate('/authentication/login');
+          }}
+        >
+          Sign Out
+        </Button>
       </DialogTitle>
-      <DialogContent dividers={scroll === 'paper'}>
+      <DialogContent>
         <DialogContentText id='scroll-dialog-description' ref={descriptionElementRef} tabIndex={-1}>
-          <div className='space-y-6'>
-            <div>
-              <h2 className='text-lg font-semibold'>Lower Divs</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Com Sci 1' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 31' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 32' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 33' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 35L' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M51A' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Upper Divs</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Com Sci 111' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 118' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 130' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 131' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 180' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci 181' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M151B' />
-                <FormControlLabel control={<Checkbox />} label='Com Sci M152A' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Math</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Math 31A' />
-                <FormControlLabel control={<Checkbox />} label='Math 31B' />
-                <FormControlLabel control={<Checkbox />} label='Math 32A' />
-                <FormControlLabel control={<Checkbox />} label='Math 32B' />
-                <FormControlLabel control={<Checkbox />} label='Math 33A' />
-                <FormControlLabel control={<Checkbox />} label='Math 33B' />
-                <FormControlLabel control={<Checkbox />} label='Math 61' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Physics</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Physics 1A' />
-                <FormControlLabel control={<Checkbox />} label='Physics 1B' />
-                <FormControlLabel control={<Checkbox />} label='Physics 1C' />
-                <FormControlLabel control={<Checkbox />} label='Physics 4AL/4BL' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Probability</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='Probability' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>CS Electives</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='CS Elective 1' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 2' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 3' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 4' />
-                <FormControlLabel control={<Checkbox />} label='CS Elective 5' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>General Education</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4 mx-6'>
-                <FormControlLabel control={<Checkbox />} label='GE 1' />
-                <FormControlLabel control={<Checkbox />} label='GE 2' />
-                <FormControlLabel control={<Checkbox />} label='GE 3' />
-                <FormControlLabel control={<Checkbox />} label='GE 4' />
-                <FormControlLabel control={<Checkbox />} label='GE 5' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Technical Breadth</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 1' />
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 2' />
-                <FormControlLabel control={<Checkbox />} label='Tech Breadth 3' />
-              </div>
-            </div>
-
-            <div>
-              <h2 className='text-lg font-semibold'>Science and Technology</h2>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 1' />
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 2' />
-                <FormControlLabel control={<Checkbox />} label='Sci Tech 3' />
-              </div>
-            </div>
-          </div>
+          <Box display='flex' flexDirection='column' gap={4}>
+            {['LOWER_DIV', 'UPPER_DIV', 'MATH', 'PHYSICS', 'GE', 'OTHER'].map(category => (
+              <Box key={category}>
+                <Typography variant='h6' gutterBottom fontWeight='bold'>
+                  {category.replace('_', ' ')}
+                </Typography>
+                <Box display='grid' gridTemplateColumns='repeat(4, 1fr)' gap={2}>
+                  {props.allCourses
+                    .filter(course => course.category === Category[category as keyof typeof Category])
+                    .map(course => (
+                      <FormControlLabel
+                        key={course.code}
+                        control={
+                          <Checkbox
+                            checked={checkedCourses[course.code] || false} // Use checked state
+                            onChange={() => handleCheckboxChange(course.code)} // Toggle checked state
+                          />
+                        }
+                        label={course.code}
+                      />
+                    ))}
+                </Box>
+              </Box>
+            ))}
+          </Box>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Save</Button>
+        <Button onClick={() => props.onClose()}>Cancel</Button>
+        <Button onClick={handleSave}>Save</Button>
       </DialogActions>
     </Dialog>
   );
