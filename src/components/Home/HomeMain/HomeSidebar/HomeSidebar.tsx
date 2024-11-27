@@ -7,33 +7,13 @@ import UnitBar from './UnitBar/UnitBar';
 import { CourseData, MyCourseData, Category } from '@/modules/course/types';
 
 type Props = {
-  units: { [year: string]: { [quarter: string]: number[] } };
+  units: number;
   allCourses: CourseData[];
   myCourses: MyCourseData[];
 };
 
 const HomeSidebar = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [totalSum, setTotalSum] = useState<number>(0);
-
-  const sumUnits = (units: { [year: string]: { [quarter: string]: number[] } }) => {
-    let totalUnits = 0;
-    // Iterate over years
-    for (const year in units) {
-      // Iterate over quarters
-      for (const quarter in units[year]) {
-        // Sum up the values in the number[] array for the current quarter
-        totalUnits += units[year][quarter].reduce((acc, value) => acc + value, 0);
-      }
-    }
-
-    return totalUnits;
-  };
-
-  useEffect(() => {
-    const sum = sumUnits(props.units);
-    setTotalSum(sum);
-  }, [props.units]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -88,7 +68,7 @@ const HomeSidebar = (props: Props) => {
             ))}
           </Box>
           <Box mt={1}>
-            <UnitBar value={totalSum}></UnitBar>
+            <UnitBar value={props.units}></UnitBar>
           </Box>
         </Box>
       </Drawer>
