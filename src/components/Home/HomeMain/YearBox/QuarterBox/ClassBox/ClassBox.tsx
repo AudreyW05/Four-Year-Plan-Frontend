@@ -1,78 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Paper, Typography, Box, Button, TextField } from '@mui/material';
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
+
 
 type Props = {
   year: string;
   quarter: string; // Name of the quarter
-  classes: { [year: string]: { [quarter: string]: string[] } };
-  units: { [year: string]: { [quarter: string]: number[] } };
-  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
-  setUnits: React.Dispatch<React.SetStateAction< { [year: string]: { [quarter: string]: number[] } } >>;
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const ClassBox = (props: Props) => {
   const [totalUnits, setTotalUnits] = useState<number>(0);
 
-  useEffect(() => {
-    const newTotal = props.units[props.year][props.quarter].reduce((sum, unit) => sum + unit, 0);
-    setTotalUnits(newTotal);
-  }), [props.classes, props.units]
-
   const addClass = (className: string, classUnits: string) => {
-    if (props.classes[props.year][props.quarter].length < 5 && !props.classes[props.year][props.quarter].includes(className)) {
-      props.setClasses((prevClasses) => {
-        const updatedClasses = { ...prevClasses };
-        // Add the new className to the relevant year and quarter
-        updatedClasses[props.year][props.quarter].push(className);
-        props.setUnits((prevUnits) => {
-          console.log(prevUnits);
-          const updatedUnits = {...prevUnits};
-          // Add new units
-          updatedUnits[props.year][props.quarter].push(Number(classUnits));
-          return updatedUnits;
-        });
-        return updatedClasses; // Return the updated state
-      });
-    }
+    
   };
 
   const removeClass = (year: string, quarter: string, className: string) => {
-    props.setClasses((prevClasses) => {
-      const updatedClasses = { ...prevClasses };
-      const classIndex = updatedClasses[year][quarter].findIndex(
-        (existingClass) => existingClass === className
-      );
-      updatedClasses[year][quarter] = updatedClasses[year][quarter].filter(
-        (_, index) => index !== classIndex
-      );
-      props.setUnits((prevUnits) => {
-        const updatedUnits = {...prevUnits};
-        updatedUnits[year][quarter] = updatedUnits[year][quarter].filter(
-          (_, index) => index !== classIndex
-        );
-        return updatedUnits;
-      });
-      return updatedClasses;
-    });
     
-  }
+  };
   
 
   function handleOnDrop(e: React.DragEvent) {
     console.log("on drop")
     const year = e.dataTransfer.getData("year") as string;
-    const quarter = e.dataTransfer.getData("quarter") as string;
-    const className = e.dataTransfer.getData("className") as string;
-    const classUnits = e.dataTransfer.getData("classUnits") as string;
+    const quarterString = e.dataTransfer.getData("quarter") as string;
+    const code = e.dataTransfer.getData("className") as string;
+    const units = e.dataTransfer.getData("classUnits") as string;
     const fromSidebar = e.dataTransfer.getData("fromSidebar") as string;
-    if (year !== props.year || quarter !== props.quarter) { // if different year/quarter
-      addClass(className, classUnits);
-    }
-    if (fromSidebar === "0") { // from class
-      if (year !== props.year || quarter !== props.quarter) { // if different year/quarter
-        removeClass(year, quarter, className);
+    let quarter: number;
+    
+    let courseData: CreateCourseData;
+    if (fromSidebar === "1") { // from
+       courseData = {
+        code: code,
+        year: Number(year),
+        quarter:
       }
     }
+    else {
+
+    }
+   
 
   }
 

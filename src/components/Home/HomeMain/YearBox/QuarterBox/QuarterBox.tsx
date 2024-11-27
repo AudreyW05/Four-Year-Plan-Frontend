@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import ClassBox from '@components/Home/HomeMain/YearBox/QuarterBox/ClassBox/ClassBox';
-
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 import { Box, Typography } from '@mui/material';
 
 type Props = {
   year: string;
   quarter: string;
-  classes: { [year: string]: { [quarter: string]: string[] } };
-  units: { [year: string]: { [quarter: string]: number[] } };
-  setClasses: React.Dispatch<React.SetStateAction<{ [year: string]: { [quarter: string]: string[] } }>>;
-  setUnits: React.Dispatch<React.SetStateAction< { [year: string]: { [quarter: string]: number[] } } >>;
+  myCourses: MyCourseData[];
+  userId: number;
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 
@@ -24,11 +24,12 @@ const QuarterBox = (props: Props) => {
       <ClassBox 
         year={props.year} 
         quarter={props.quarter} 
-        classes={props.classes}
-        units={props.units}
-        setClasses={props.setClasses}
-        setUnits={props.setUnits}
-      ></ClassBox>
+        myCourses={props.myCourses}
+        userId={props.userId}
+        handleAddCourse={props.handleAddCourse}
+        handleDeleteCourse={props.handleDeleteCourse}
+      >
+      </ClassBox>
     </Box>
   );
 };

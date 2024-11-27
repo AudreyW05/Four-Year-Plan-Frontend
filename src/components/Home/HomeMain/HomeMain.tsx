@@ -7,38 +7,22 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { TornadoSharp } from '@mui/icons-material';
-import { CourseData, MyCourseData } from '@/modules/course/types';
+import { PropaneSharp, TornadoSharp } from '@mui/icons-material';
+import { CourseData, MyCourseData, CreateCourseData } from '@/modules/course/types';
 
 type Props = {
+  userId: number;
   allCourses: CourseData[];
   myCourses: MyCourseData[];
+  handleAddCourse: (data: CreateCourseData) => void;
+  handleDeleteCourse: (code: string) => void;
 };
 
 const HomeMain = (props: Props) => {
   const [numOfYears, setNumOfYears] = useState<number>(4);
   const [addIsHovered, setAddIsHovered] = useState<boolean>(false);
   const [removeIsHovered, setRemoveIsHovered] = useState<boolean>(false);
-
-  // Global state for units across all years and quarters
-  const [units, setUnits] = useState<{ [key: string]: { [quarter: string]: number[] } }>({
-    '1': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '2': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '3': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '4': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '5': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '6': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-  });
-  // Global state for classes across all years and quarters
-  const [classes, setClasses] = useState<{ [key: string]: { [quarter: string]: string[] } }>({
-    '1': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '2': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '3': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '4': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '5': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-    '6': { 'Fall Quarter': [], 'Winter Quarter': [], 'Spring Quarter': [], 'Summer Quarter': [] },
-  });
-
+  const units = 0;
   const handleAdd = () => {
     if (numOfYears < 6) {
       setNumOfYears(numOfYears + 1);
@@ -47,35 +31,25 @@ const HomeMain = (props: Props) => {
   };
 
   const handleRemove = () => {
-    removeYear(String(numOfYears));
+    removeYear(numOfYears);
     if (numOfYears > 1) {
       setNumOfYears(numOfYears - 1);
     }
     setRemoveIsHovered(false);
   };
 
-  const removeYear = (year: string) => {
-    // Clear classes for the entire year across all quarters
-    setClasses(prevClasses => ({
-      ...prevClasses,
-      [year]: {
-        'Fall Quarter': [], // Reset classes for Fall Quarter
-        'Winter Quarter': [], // Reset classes for Winter Quarter
-        'Spring Quarter': [], // Reset classes for Spring Quarter
-        'Summer Quarter': [], // Reset classes for Summer Quarter
-      },
-    }));
+  const removeYear = (year: number) => {
+    // go through myCourses, check to see if myCourses.yearQuarter's first digit === Number(year)
+    // if true, call handleDeleteCourse using that myCourses element's course code (myCourses.code)
+    props.myCourses.forEach(course => {
+      const courseYear = Math.floor(course.yearQuarter / 10); // two digit, floor 10 gets year
 
-    // Clear units for the entire year across all quarters
-    setUnits(prevUnits => ({
-      ...prevUnits,
-      [year]: {
-        'Fall Quarter': [0, 0, 0, 0], // Reset units for Fall Quarter (set to zeros)
-        'Winter Quarter': [0, 0, 0, 0], // Reset units for Winter Quarter (set to zeros)
-        'Spring Quarter': [0, 0, 0, 0], // Reset units for Spring Quarter (set to zeros)
-        'Summer Quarter': [0, 0, 0, 0], // Reset units for Summer Quarter (set to zeros)
-      },
-    }));
+      // delete course from myCourses
+      if (courseYear === year) {
+        props.handleDeleteCourse(course.code);
+      }
+    });
+      
   };
 
   return (
@@ -85,13 +59,13 @@ const HomeMain = (props: Props) => {
         <Stack className='mt-24 w-full items-center justify-center'>
           {/* Classes will be rendered based on numOfClasses */}
           {[...Array(numOfYears)].map((_, index) => (
-            <YearBox
-              key={index}
-              year={(index + 1).toString()}
-              classes={classes} // Pass the global classes state
-              units={units} // Pass the global units state
-              setClasses={setClasses} // Pass the function to update the global classname state
-              setUnits={setUnits} // Pass the function to update global units
+            <YearBox 
+            key={index} 
+            year={(index + 1).toString()}
+            myCourses={props.myCourses}
+            userId={props.userId}
+            handleAddCourse={props.handleAddCourse}
+            handleDeleteCourse={props.handleDeleteCourse}
             />
           ))}
           <Stack direction='row' className='space-x-4 mb-4 mt-2'>
@@ -114,7 +88,10 @@ const HomeMain = (props: Props) => {
           </Stack>
         </Stack>
       </Stack>
-      <TrashBox setClasses={setClasses} setUnits={setUnits} />
+      <TrashBox 
+        handleAddCourse={handleAddCourse}
+        handleDeleteCourse={handleDeleteCourse}
+      />
     </>
   );
 };
