@@ -3,12 +3,24 @@ import Settings from '@/components/Home/HomeHeader/Settings/Settings';
 
 import { AppBar, Grid, Typography, Box } from '@mui/material';
 
-const HomeHeader = () => {
+import { UserData } from '@/modules/user/types';
+
+export type Props = {
+  currentUser: UserData;
+};
+
+const HomeHeader = ({ currentUser }: Props) => {
   const [showSettings, setShowSettings] = useState(false);
 
   const handleShowSettings = () => {
     setShowSettings(!showSettings);
   };
+
+  const profileName = currentUser.email ? currentUser.email.substring(0, currentUser.email.lastIndexOf('@')) : '?';
+  const initials =
+    profileName.lastIndexOf('.') === -1
+      ? profileName.charAt(0).toUpperCase()
+      : (profileName.charAt(0) + profileName.charAt(profileName.lastIndexOf('.') + 1)).toUpperCase();
 
   return (
     <>
@@ -20,7 +32,7 @@ const HomeHeader = () => {
               className='flex bg-uclaBlue text-white rounded-full justify-center items-center w-12 h-12 cursor-pointer mr-10 float-right'
               onClick={handleShowSettings}
             >
-              <p className='font-Inter'>AW</p> {/* Placeholder initials */}
+              <p className='font-Inter'>{initials}</p>
             </Box>
           </div>
         </Grid>
