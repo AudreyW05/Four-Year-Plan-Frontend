@@ -9,8 +9,6 @@ type Props = {
   allCourses: CourseData[];
   myCourses: MyCourseData[];
   userId: number;
-  currentUser: UserData;
-
   handleAddCourse: (data: CreateCourseData) => void;
   handleDeleteCourse: (code: string) => void;
 };
@@ -22,12 +20,6 @@ const HomeHeader = (props: Props) => {
     setShowSettings(!showSettings);
   };
 
-  const profileName = props.currentUser.email ? props.currentUser.email.substring(0, props.currentUser.email.lastIndexOf('@')) : '?';
-  const initials =
-    profileName.lastIndexOf('.') === -1
-      ? profileName.charAt(0).toUpperCase()
-      : (profileName.charAt(0) + profileName.charAt(profileName.lastIndexOf('.') + 1)).toUpperCase();
-
   return (
     <>
       <AppBar elevation={0} className='bg-bgWhite w-screen bg-bgGray shadow-[0_4px_10px_0px_rgba(0,0,0,0.25)] z-20' position='fixed'>
@@ -38,7 +30,7 @@ const HomeHeader = (props: Props) => {
               className='flex bg-uclaBlue text-white rounded-full justify-center items-center w-12 h-12 cursor-pointer mr-10 float-right'
               onClick={handleShowSettings}
             >
-              <p className='font-Inter'>{initials}</p>
+              <p className='font-Inter'>AW</p> {/* Placeholder initials */}
             </Box>
           </div>
         </Grid>
