@@ -1,6 +1,6 @@
 # Application Frontend
 
-_Application Description_
+The Four-Year Planner is designed to streamline class planning for CS and CSE majors at UCLA. Users land on a login page, where they have the option to log in, sign up, or reset password. Once logged in, users can select and map out their schedules, with the option to customize the length of their degrees.  
 
 ## Inital setup
 
@@ -15,16 +15,12 @@ _Application Description_
 
 ## Documentation
 
-- [**Live Site**]()
-- [**Figma Design**]()
+- [**Figma Design**](https://www.figma.com/design/tE7rmQU9n1LsovKoRfqZrl/CS-35L-Website?node-id=1-2&t=FBo3HW8tr1RIha2u-1)
 
-### File Structure and Naming Convention
+### File Structure and Naming Convention Used
 
 ```
 src/
-├─ api/
-│  ├─ ApiHandler.ts
-│  ├─ ApiService.ts
 ├─ assets/
 ├─ components/
 │  ├─ ExampleComponent/
@@ -40,20 +36,6 @@ src/
 │  ├─ contexts/
 │  ├─ miscellaneous.ts
 ```
-
-### Commit Message Convention
-
-- Use [Gitmoji](https://gitmoji.dev/) to add emojis to your commit messages
-- Use the following format for your commit messages
-  - :sparkles: `feat: add new feature`
-  - :bug: `fix: fix a bug`
-  - :recycle: `refactor: refactor code`
-  - :art: `style: change styling`
-  - :fire: `chore: remove unused code`
-  - :memo: `docs: update documentation`
-  - :package: `package: update package`
-  - :rocket: `deploy: deploy to production`
-  - :wastebasket: `waste: remove unused code`
 
 ## Screenshots
 
