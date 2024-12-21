@@ -69,7 +69,7 @@ const HomeSidebar = (props: Props) => {
           </Box>
           <Box mt={1}>
             <UnitBar value={props.units}></UnitBar>
-          </Box>
+f          </Box>
         </Box>
       </Drawer>
     </Box>
